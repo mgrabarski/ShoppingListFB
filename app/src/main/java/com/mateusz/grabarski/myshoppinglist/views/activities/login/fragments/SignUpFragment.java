@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 
@@ -32,6 +33,9 @@ public class SignUpFragment extends Fragment {
 
     @BindView(R.id.fragment_sign_up_confirm_password_tv)
     EditText confirmPasswordEt;
+
+    @BindView(R.id.fragment_sign_up_progress_bar)
+    ProgressBar progressBar;
 
     private SignUpFragmentInterface mListener;
 

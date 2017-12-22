@@ -12,4 +12,8 @@
     <string name="confirm_password">Confirm password</string>
     <string name="name">Name</string>
     <string name="sign_up">Sign up</string>
+    <string name="ok">Ok</string>
+    <string name="information">Information</string>
+    <string name="email_valid_error">Typed email address is not valid. Please type correct address.</string>
+    <string name="password_valid_error">Type password is to shot. Please type correct.</string>
 </resources>

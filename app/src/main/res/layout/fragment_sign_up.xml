@@ -81,6 +81,15 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/fragment_sign_up_progress_bar"
+        android:layout_width="60dp"
+        android:layout_height="6dp"
+        android:layout_above="@+id/fragment_sign_up_btn"
+        android:layout_below="@+id/fragment_sign_up_input_ll"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
     <Button
         android:id="@+id/fragment_sign_up_btn"
         style="@style/AcceptButton"

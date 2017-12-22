@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shopping_background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -126,6 +128,15 @@
         android:layout_below="@+id/fragment_login_input_ll"
         android:layout_marginTop="16dp"
         android:text="@string/log_in" />
+
+    <ProgressBar
+        android:id="@+id/fragment_login_progress_bar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/fragment_login_bottom_info_ll"
+        android:layout_below="@+id/fragment_login_login_btn"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/fragment_login_bottom_info_ll"

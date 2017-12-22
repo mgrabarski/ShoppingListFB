@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.mateusz.grabarski.myshoppinglist.MainActivity;
 import com.mateusz.grabarski.myshoppinglist.base.BaseActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.LoginActivity;
 
