@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#2E7D32</color>
+    <color name="colorAccent">#F57F17</color>
+
+    <color name="facebook_btn_color">#416ec3</color>
+    <color name="facebook_btn_separator_color">#3d6ab9</color>
+    <color name="google_btn_color">#db5648</color>
+    <color name="google_btn_separator_color">#d45547</color>
 </resources>

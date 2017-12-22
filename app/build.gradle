@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    flavorDimensions "minSdkVersion"
+
     defaultConfig {
         applicationId "com.mateusz.grabarski.myshoppinglist"
         minSdkVersion 21
@@ -15,6 +17,22 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    productFlavors {
+
+        // Build variant with minSdk 16 to include Facebook and FirebaseUI libraries.
+        minSdkJellybean {
+            dimension "minSdkVersion"
+            minSdkVersion 16
+        }
+
+        // Build variant with minSdk 14, excludes Facebook and FirebaseUI libraries.
+        minSdkIcs {
+            dimension "minSdkVersion"
+            minSdkVersion 14
+        }
+
     }
 }
 
@@ -30,5 +48,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    compile 'com.google.android.gms:play-services-auth:11.8.0'
+    compile 'com.google.firebase:firebase-auth:11.8.0'
+    compile 'com.google.firebase:firebase-database:11.8.0'
+    minSdkJellybeanCompile 'com.firebaseui:firebase-ui-auth:3.1.2'
+
 }
 apply plugin: 'com.google.gms.google-services'
