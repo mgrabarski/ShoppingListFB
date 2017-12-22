@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void showProgressDialog() {
-        
+
     }
 
     @Override
@@ -87,6 +87,22 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void displayDashboard() {
 
+    }
+
+    @Override
+    public void displayPasswordMatchError() {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.password_confirm_password_not_same));
+        builder.show();
+    }
+
+    @Override
+    public void displayUserNameError() {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.user_name_empty_error));
+        builder.show();
     }
 
     @Override

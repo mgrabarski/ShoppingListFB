@@ -16,4 +16,6 @@
     <string name="information">Information</string>
     <string name="email_valid_error">Typed email address is not valid. Please type correct address.</string>
     <string name="password_valid_error">Type password is to shot. Please type correct.</string>
+    <string name="user_name_empty_error">Username cannot be empty.</string>
+    <string name="password_confirm_password_not_same">Password and confirm password are not match.</string>
 </resources>

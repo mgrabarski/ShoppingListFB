@@ -16,4 +16,9 @@ public class LoginModelImpl implements LoginContract.Model {
     public void loginUser(String email, String password) {
 
     }
+
+    @Override
+    public void createUser(String name, String email, String password, String confirmPassword) {
+
+    }
 }
