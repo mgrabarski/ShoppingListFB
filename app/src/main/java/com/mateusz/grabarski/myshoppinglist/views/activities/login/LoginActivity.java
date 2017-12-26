@@ -7,18 +7,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.contract.LoginContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.contract.LoginPresenterImpl;
+import com.mateusz.grabarski.myshoppinglist.views.activities.login.dialogs.ForgotPasswordDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.fragments.LoginFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.fragments.SignUpFragment;
 
 public class LoginActivity extends AppCompatActivity implements
         LoginFragment.LoginFragmentInterface,
         SignUpFragment.SignUpFragmentInterface,
-        LoginContract.View {
+        LoginContract.View,
+        ForgotPasswordDialog.ForgotPasswordDialogListener {
 
     private LoginContract.Presenter mPresenter;
     private Fragment currentFragment;
@@ -123,7 +126,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void onPasswordForget() {
-
+        ForgotPasswordDialog dialog = ForgotPasswordDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), ForgotPasswordDialog.class.getSimpleName());
     }
 
     @Override
@@ -134,5 +138,10 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onGoogleLogin() {
         // TODO: 22.12.2017
+    }
+
+    @Override
+    public void onResetPasswordClick(String emailAddress) {
+
     }
 }
