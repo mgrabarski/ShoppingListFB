@@ -1,5 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
+
 /**
  * Created by MGrabarski on 22.12.2017.
  */
@@ -27,11 +29,17 @@ public interface LoginContract {
         void displayPasswordMatchError();
 
         void displayUserNameError();
+
+        void displayRegistrationError(String errorMessage);
     }
 
     interface Presenter {
         void validateCredentials(String email, String password);
 
         void signUp(String name, String email, String password, String confirmPassword);
+
+        void createAccountFailed(String errorMessage);
+
+        void accountCreatedSuccessfully(boolean success, User user);
     }
 }

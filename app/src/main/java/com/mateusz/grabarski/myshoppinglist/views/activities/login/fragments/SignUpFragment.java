@@ -72,6 +72,14 @@ public class SignUpFragment extends Fragment {
         mListener.onSignUp(nameEt.getText().toString(), emailEt.getText().toString(), passwordEt.getText().toString(), confirmPasswordEt.getText().toString());
     }
 
+    public void showProgressIndicator() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void dismissProgressIndicator() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     public interface SignUpFragmentInterface {
         void onSignUp(String name, String email, String password, String confirmPassword);
     }

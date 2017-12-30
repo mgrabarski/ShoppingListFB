@@ -1,5 +1,8 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
+import android.util.Log;
+
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputValidator;
 
 /**
@@ -7,6 +10,8 @@ import com.mateusz.grabarski.myshoppinglist.utils.InputValidator;
  */
 
 public class LoginPresenterImpl implements LoginContract.Presenter {
+
+    private static final String TAG = "LoginPresenterImpl";
 
     private LoginContract.View mView;
     private LoginContract.Model mModel;
@@ -36,11 +41,25 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
             mView.displayEmailError();
         else if (!inputValidator.isPasswordLengthValid(password))
             mView.displayPasswordError();
-        else if (!inputValidator.isUserNameValid(name))
+        else if (inputValidator.isUserNameValid(name))
             mView.displayUserNameError();
         else if (!inputValidator.isPasswordAndConfirmPasswordValid(password, confirmPassword))
             mView.displayPasswordMatchError();
-        else
+        else {
+            mView.showProgressDialog();
             mModel.createUser(name, email, password, confirmPassword);
+        }
+    }
+
+    @Override
+    public void createAccountFailed(String errorMessage) {
+        mView.hideProgressDialog();
+        mView.displayRegistrationError(errorMessage);
+    }
+
+    @Override
+    public void accountCreatedSuccessfully(boolean success, User user) {
+        Log.d(TAG, "accountCreatedSuccessfully: " + success);
+        mView.hideProgressDialog();
     }
 }

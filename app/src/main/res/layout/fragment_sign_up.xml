@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:inputType="textEmailAddress"
+                android:text="Mateusz"
                 android:textColor="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:text="mateusz.grabarski@gmail.com"
                 android:textColor="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
@@ -63,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:text="zaqwsx"
                 android:textColor="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
@@ -77,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
+                android:text="zaqwsx"
                 android:textColor="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
@@ -88,7 +92,8 @@
         android:layout_above="@+id/fragment_sign_up_btn"
         android:layout_below="@+id/fragment_sign_up_input_ll"
         android:layout_centerHorizontal="true"
-        android:visibility="invisible" />
+        android:indeterminate="true"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/fragment_sign_up_btn"

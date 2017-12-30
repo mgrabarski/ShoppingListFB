@@ -63,12 +63,29 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void showProgressDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (currentFragment instanceof LoginFragment)
+                    ((LoginFragment) currentFragment).showProgressIndicator();
+                else if (currentFragment instanceof SignUpFragment)
+                    ((SignUpFragment) currentFragment).showProgressIndicator();
 
+            }
+        });
     }
 
     @Override
     public void hideProgressDialog() {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (currentFragment instanceof LoginFragment)
+                    ((LoginFragment) currentFragment).dismissProgressIndicator();
+                else if (currentFragment instanceof SignUpFragment)
+                    ((SignUpFragment) currentFragment).dismissProgressIndicator();
+            }
+        });
     }
 
     @Override
@@ -105,6 +122,14 @@ public class LoginActivity extends AppCompatActivity implements
         AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
                 getString(R.string.information),
                 getString(R.string.user_name_empty_error));
+        builder.show();
+    }
+
+    @Override
+    public void displayRegistrationError(String errorMessage) {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                errorMessage);
         builder.show();
     }
 

@@ -86,6 +86,14 @@ public class LoginFragment extends Fragment {
         mListener.onGoogleLogin();
     }
 
+    public void showProgressIndicator() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void dismissProgressIndicator() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     public interface LoginFragmentInterface {
         void onLogin(String email, String password);
 
