@@ -1,13 +1,18 @@
 package com.mateusz.grabarski.myshoppinglist.database.models;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by MGrabarski on 23.12.2017.
  */
-
+@IgnoreExtraProperties
 public class User {
 
     private String name;
     private String email;
+
+    @Exclude
     private String password;
     private long createDate;
 
@@ -37,10 +42,12 @@ public class User {
         this.email = email;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }
 
+    @Exclude
     public void setPassword(String password) {
         this.password = password;
     }

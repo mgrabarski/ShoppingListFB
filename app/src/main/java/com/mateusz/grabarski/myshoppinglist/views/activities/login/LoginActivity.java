@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.contract.LoginContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.contract.LoginPresenterImpl;
@@ -130,6 +131,14 @@ public class LoginActivity extends AppCompatActivity implements
         AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
                 getString(R.string.information),
                 errorMessage);
+        builder.show();
+    }
+
+    @Override
+    public void displayRegistrationSuccess(User user) {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.registration_success));
         builder.show();
     }
 

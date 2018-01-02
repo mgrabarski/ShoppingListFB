@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.database.managers;
 
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
+import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.dto.memory.UserRepoMemoryImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -14,7 +15,7 @@ public class UserManager {
     private UserRepository mUserRepository;
 
     public UserManager() {
-        mUserRepository = new UserRepoMemoryImpl();
+        mUserRepository = new UserRepoFirebaseImpl();
     }
 
     public void registerUser(User user, CreateNewAccountListener listener) {

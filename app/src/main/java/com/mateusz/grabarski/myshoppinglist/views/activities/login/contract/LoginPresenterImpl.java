@@ -59,7 +59,7 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
 
     @Override
     public void accountCreatedSuccessfully(boolean success, User user) {
-        Log.d(TAG, "accountCreatedSuccessfully: " + success);
         mView.hideProgressDialog();
+        mView.displayRegistrationSuccess(user);
     }
 }

@@ -31,6 +31,8 @@ public interface LoginContract {
         void displayUserNameError();
 
         void displayRegistrationError(String errorMessage);
+
+        void displayRegistrationSuccess(User user);
     }
 
     interface Presenter {
