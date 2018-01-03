@@ -7,7 +7,7 @@ import com.mateusz.grabarski.myshoppinglist.database.models.User;
  */
 
 public interface CreateNewAccountListener {
-    void onCreateAccountSuccess(boolean success, User user);
+    void onCreateAccountSuccess(User user);
 
     void onCreateAccountFailed(String errorMessage);
 }

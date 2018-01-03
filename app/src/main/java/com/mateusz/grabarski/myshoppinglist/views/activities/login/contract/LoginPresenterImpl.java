@@ -1,7 +1,5 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
-import android.util.Log;
-
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputValidator;
 
@@ -10,8 +8,6 @@ import com.mateusz.grabarski.myshoppinglist.utils.InputValidator;
  */
 
 public class LoginPresenterImpl implements LoginContract.Presenter {
-
-    private static final String TAG = "LoginPresenterImpl";
 
     private LoginContract.View mView;
     private LoginContract.Model mModel;
@@ -22,15 +18,17 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
     }
 
     @Override
-    public void validateCredentials(String email, String password) {
+    public void loginByEmail(String email, String password) {
         InputValidator inputValidator = new InputValidator();
 
         if (!inputValidator.isEmailValid(email))
             mView.displayEmailError();
         else if (!inputValidator.isPasswordLengthValid(password))
             mView.displayPasswordError();
-        else
+        else {
+            mView.showProgressDialog();
             mModel.loginUser(email, password);
+        }
     }
 
     @Override
@@ -58,8 +56,20 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
     }
 
     @Override
-    public void accountCreatedSuccessfully(boolean success, User user) {
+    public void accountCreatedSuccessfully(User user) {
         mView.hideProgressDialog();
         mView.displayRegistrationSuccess(user);
+    }
+
+    @Override
+    public void loginByEmailSuccess(User user) {
+        mView.hideProgressDialog();
+        mView.displayDashboard();
+    }
+
+    @Override
+    public void loginByEmailFailed(String errorMessage) {
+        mView.hideProgressDialog();
+        mView.displayLoginError(errorMessage);
     }
 }

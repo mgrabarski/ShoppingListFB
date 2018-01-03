@@ -33,15 +33,21 @@ public interface LoginContract {
         void displayRegistrationError(String errorMessage);
 
         void displayRegistrationSuccess(User user);
+
+        void displayLoginError(String errorMessage);
     }
 
     interface Presenter {
-        void validateCredentials(String email, String password);
+        void loginByEmail(String email, String password);
 
         void signUp(String name, String email, String password, String confirmPassword);
 
         void createAccountFailed(String errorMessage);
 
-        void accountCreatedSuccessfully(boolean success, User user);
+        void accountCreatedSuccessfully(User user);
+
+        void loginByEmailSuccess(User user);
+
+        void loginByEmailFailed(String errorMessage);
     }
 }

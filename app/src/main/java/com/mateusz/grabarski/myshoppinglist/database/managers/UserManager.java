@@ -4,6 +4,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.dto.memory.UserRepoMemoryImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -15,7 +16,7 @@ public class UserManager {
     private UserRepository mUserRepository;
 
     public UserManager() {
-        mUserRepository = new UserRepoFirebaseImpl();
+        mUserRepository = new UserRepoMemoryImpl();
     }
 
     public void registerUser(User user, CreateNewAccountListener listener) {
@@ -24,5 +25,9 @@ public class UserManager {
 
     public User getUserByEmail(String email) {
         return mUserRepository.getUserByEmail(email);
+    }
+
+    public void loginUser(String email, String password, LoginListener loginListener) {
+        mUserRepository.loginUser(email, password, loginListener);
     }
 }

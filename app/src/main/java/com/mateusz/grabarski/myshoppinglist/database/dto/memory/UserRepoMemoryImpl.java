@@ -1,7 +1,9 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.memory;
 
+import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 import java.util.ArrayList;
@@ -17,6 +19,12 @@ public class UserRepoMemoryImpl implements UserRepository {
 
     public UserRepoMemoryImpl() {
         mUsers = new ArrayList<>();
+
+        User user1 = new User("Mateusz", "mateusz.grabarski@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_1);
+        User user2 = new User("Test", "test@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_2);
+
+        mUsers.add(user1);
+        mUsers.add(user2);
     }
 
     @Override
@@ -28,7 +36,7 @@ public class UserRepoMemoryImpl implements UserRepository {
             public void run() {
                 try {
                     Thread.sleep(2000);
-                    listener.onCreateAccountSuccess(true, user);
+                    listener.onCreateAccountSuccess(user);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -52,5 +60,29 @@ public class UserRepoMemoryImpl implements UserRepository {
                 return user;
 
         return null;
+    }
+
+    @Override
+    public void loginUser(final String email, final String password, final LoginListener loginListener) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+
+                    for (User user : mUsers) {
+                        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                            loginListener.onLoginSuccess(user);
+                            return;
+                        }
+                    }
+
+                    loginListener.onLoginFailed("Failed login");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
