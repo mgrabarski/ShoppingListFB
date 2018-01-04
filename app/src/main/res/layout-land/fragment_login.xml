@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shopping_background"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shopping_background"
+        tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/fragment_login_hello_header_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:gravity="center"
         android:text="@string/hello"
         android:textColor="@android:color/white"
         android:textSize="32sp" />
 
     <TextView
+        android:id="@+id/fragment_login_sign_in_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment_login_social_ll"
+        android:layout_below="@+id/fragment_login_hello_header_tv"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:text="@string/sign_in_using"
         android:textColor="@android:color/white" />
 
@@ -29,7 +41,9 @@
         android:id="@+id/fragment_login_social_ll"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_above="@+id/fragment_login_separator_ll"
+        android:layout_below="@+id/fragment_login_sign_in_header_tv"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:orientation="horizontal">
 
         <include
@@ -40,7 +54,7 @@
             android:layout_weight="1" />
 
         <View
-            android:layout_width="4dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content" />
 
         <include
@@ -52,41 +66,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fragment_login_separator_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment_login_input_ll"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@android:color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/or"
-            android:textColor="@android:color/white" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@android:color/white" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/fragment_login_input_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/fragment_login_social_ll"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="#90ffffff"
         android:orientation="vertical"
         android:padding="8dp">
@@ -126,14 +112,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_login_input_ll"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/log_in" />
 
     <ProgressBar
         android:id="@+id/fragment_login_progress_bar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_above="@+id/fragment_login_bottom_info_ll"
         android:layout_below="@+id/fragment_login_login_btn"
         android:layout_centerHorizontal="true"
         android:indeterminate="true"

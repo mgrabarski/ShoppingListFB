@@ -2,11 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shopping_background"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shopping_background" />
 
     <TextView
+        android:id="@+id/fragment_sign_up_header_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,8 +24,13 @@
         android:id="@+id/fragment_sign_up_input_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/fragment_sign_up_btn"
+        android:layout_below="@+id/fragment_sign_up_header_tv"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:background="#90ffffff"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -84,12 +94,10 @@
     <ProgressBar
         android:id="@+id/fragment_sign_up_progress_bar"
         android:layout_width="60dp"
-        android:layout_height="6dp"
-        android:layout_above="@+id/fragment_sign_up_btn"
-        android:layout_below="@+id/fragment_sign_up_input_ll"
-        android:layout_centerHorizontal="true"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
         android:indeterminate="true"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/fragment_sign_up_btn"
@@ -97,6 +105,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
         android:text="@string/sign_up" />
 </RelativeLayout>
