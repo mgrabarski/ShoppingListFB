@@ -1,9 +1,11 @@
 package com.mateusz.grabarski.myshoppinglist.database.managers;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.dto.memory.UserRepoMemoryImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -34,5 +36,9 @@ public class UserManager {
 
     public void sendResetPasswordEmail(String email, ResetPasswordListener listener) {
         mUserRepository.sendResetPasswordEmail(email, listener);
+    }
+
+    public void loginByGoogle(GoogleSignInAccount account, LoginByGoogleListener listener) {
+        mUserRepository.loginUserByGoogle(account, listener);
     }
 }

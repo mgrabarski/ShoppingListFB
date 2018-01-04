@@ -1,8 +1,10 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.memory;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -109,5 +111,10 @@ public class UserRepoMemoryImpl implements UserRepository {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void loginUserByGoogle(GoogleSignInAccount account, LoginByGoogleListener listener) {
+
     }
 }

@@ -2,12 +2,14 @@ package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -69,6 +71,21 @@ public class LoginModelImpl implements LoginContract.Model {
             @Override
             public void onSendFailed(String errorMessage) {
                 mPresenter.sendResetPasswordEmailFailed(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void loginByGoogle(GoogleSignInAccount account) {
+        mUserManager.loginByGoogle(account, new LoginByGoogleListener(){
+            @Override
+            public void onLoginSuccess(User user) {
+
+            }
+
+            @Override
+            public void onLoginFailed(String errorMessage) {
+
             }
         });
     }

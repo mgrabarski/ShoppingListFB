@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -15,6 +16,8 @@ public interface LoginContract {
         void createUser(String name, String email, String password, String confirmPassword);
 
         void sendResetPasswordEmail(String email);
+
+        void loginByGoogle(GoogleSignInAccount account);
     }
 
     interface View {
@@ -61,5 +64,7 @@ public interface LoginContract {
         void sendResetPasswordEmailSuccess();
 
         void sendResetPasswordEmailFailed(String errorMessage);
+
+        void loginByGoogle(GoogleSignInAccount account);
     }
 }
