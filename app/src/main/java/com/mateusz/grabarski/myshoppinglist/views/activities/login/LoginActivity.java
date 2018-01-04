@@ -2,8 +2,6 @@ package com.mateusz.grabarski.myshoppinglist.views.activities.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,13 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
@@ -40,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements
         LoginContract.View,
         ForgotPasswordDialog.ForgotPasswordDialogListener {
 
-    private static final int RC_SIGN_IN = 9001;
+    private static final int GOOGLE_SIGN_IN = 9001;
 
     private LoginContract.Presenter mPresenter;
     private Fragment currentFragment;
@@ -95,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == GOOGLE_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -105,10 +97,6 @@ public class LoginActivity extends AppCompatActivity implements
                 Log.d(LoginActivity.class.getSimpleName(), "onActivityResult: " + e);
             }
         }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
     }
 
     @Override
@@ -254,7 +242,7 @@ public class LoginActivity extends AppCompatActivity implements
     public void onGoogleLogin() {
         showProgressDialog();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
     @Override
