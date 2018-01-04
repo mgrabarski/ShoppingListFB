@@ -4,6 +4,7 @@ import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 import java.util.ArrayList;
@@ -79,6 +80,30 @@ public class UserRepoMemoryImpl implements UserRepository {
                     }
 
                     loginListener.onLoginFailed("Failed login");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void sendResetPasswordEmail(final String email, final ResetPasswordListener listener) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+
+                    for (User user : mUsers)
+                        if (user.getEmail().equals(email)) {
+                            user.setPassword("reset");
+                            listener.onSendSuccess();
+                            return;
+                        }
+
+                    listener.onSendFailed("Filed password reset");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

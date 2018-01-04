@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -17,7 +18,7 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.login.contract.Logi
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.dialogs.ForgotPasswordDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.fragments.LoginFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.fragments.SignUpFragment;
-import com.mateusz.grabarski.myshoppinglist.views.dashboard.DashboardActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.DashboardActivity;
 
 public class LoginActivity extends AppCompatActivity implements
         LoginFragment.LoginFragmentInterface,
@@ -34,7 +35,9 @@ public class LoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_login);
 
         currentFragment = LoginFragment.newInstance();
-        replaceAndAddToBackStackFragment(currentFragment);
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+            replaceAndAddToBackStackFragment(currentFragment);
 
         mPresenter = new LoginPresenterImpl(this);
     }
@@ -160,6 +163,22 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void displaySendResetPasswordEmailSuccess() {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.check_email_for_reset_password_message));
+        builder.show();
+    }
+
+    @Override
+    public void displaySendResetPasswordEmailFailed(String errorMessage) {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                errorMessage);
+        builder.show();
+    }
+
+    @Override
     public void onSignUp(String name, String email, String password, String confirmPassword) {
         mPresenter.signUp(name, email, password, confirmPassword);
     }
@@ -193,6 +212,6 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void onResetPasswordClick(String emailAddress) {
-
+        mPresenter.resetPassword(emailAddress);
     }
 }

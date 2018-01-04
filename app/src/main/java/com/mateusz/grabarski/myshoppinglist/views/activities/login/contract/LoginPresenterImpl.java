@@ -72,4 +72,28 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
         mView.hideProgressDialog();
         mView.displayLoginError(errorMessage);
     }
+
+    @Override
+    public void resetPassword(String emailAddress) {
+        InputValidator inputValidator = new InputValidator();
+
+        if (!inputValidator.isEmailValid(emailAddress))
+            mView.displayEmailError();
+        else {
+            mView.showProgressDialog();
+            mModel.sendResetPasswordEmail(emailAddress);
+        }
+    }
+
+    @Override
+    public void sendResetPasswordEmailSuccess() {
+        mView.hideProgressDialog();
+        mView.displaySendResetPasswordEmailSuccess();
+    }
+
+    @Override
+    public void sendResetPasswordEmailFailed(String errorMessage) {
+        mView.hideProgressDialog();
+        mView.displaySendResetPasswordEmailFailed(errorMessage);
+    }
 }

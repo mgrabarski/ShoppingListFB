@@ -1,4 +1,4 @@
-package com.mateusz.grabarski.myshoppinglist.views.dashboard;
+package com.mateusz.grabarski.myshoppinglist.views.activities.dashboard;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

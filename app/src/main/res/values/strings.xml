@@ -23,4 +23,5 @@
     <string name="reset">Reset</string>
     <string name="cancel">Cancel</string>
     <string name="registration_success">Your account has been created. Now you can login into application.</string>
+    <string name="check_email_for_reset_password_message">Please check your email box. Reset your password by following the instructions from the email.</string>
 </resources>

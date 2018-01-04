@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -53,6 +54,21 @@ public class LoginModelImpl implements LoginContract.Model {
             @Override
             public void onCreateAccountFailed(String errorMessage) {
                 mPresenter.createAccountFailed(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void sendResetPasswordEmail(String email) {
+        mUserManager.sendResetPasswordEmail(email, new ResetPasswordListener() {
+            @Override
+            public void onSendSuccess() {
+                mPresenter.sendResetPasswordEmailSuccess();
+            }
+
+            @Override
+            public void onSendFailed(String errorMessage) {
+                mPresenter.sendResetPasswordEmailFailed(errorMessage);
             }
         });
     }

@@ -16,6 +16,7 @@ import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputFormatter;
 
@@ -94,6 +95,20 @@ public class UserRepoFirebaseImpl implements UserRepository {
 
                         }
                     });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void sendResetPasswordEmail(String email, final ResetPasswordListener listener) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onSendSuccess();
+                } else {
+                    listener.onSendFailed(task.getException().getMessage());
                 }
             }
         });

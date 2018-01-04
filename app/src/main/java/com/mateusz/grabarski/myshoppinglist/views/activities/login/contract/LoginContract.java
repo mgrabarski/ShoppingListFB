@@ -13,6 +13,8 @@ public interface LoginContract {
         void loginUser(String email, String password);
 
         void createUser(String name, String email, String password, String confirmPassword);
+
+        void sendResetPasswordEmail(String email);
     }
 
     interface View {
@@ -35,6 +37,10 @@ public interface LoginContract {
         void displayRegistrationSuccess(User user);
 
         void displayLoginError(String errorMessage);
+
+        void displaySendResetPasswordEmailSuccess();
+
+        void displaySendResetPasswordEmailFailed(String errorMessage);
     }
 
     interface Presenter {
@@ -49,5 +55,11 @@ public interface LoginContract {
         void loginByEmailSuccess(User user);
 
         void loginByEmailFailed(String errorMessage);
+
+        void resetPassword(String emailAddress);
+
+        void sendResetPasswordEmailSuccess();
+
+        void sendResetPasswordEmailFailed(String errorMessage);
     }
 }

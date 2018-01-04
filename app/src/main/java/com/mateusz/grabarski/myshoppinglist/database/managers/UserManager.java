@@ -5,6 +5,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFireba
 import com.mateusz.grabarski.myshoppinglist.database.dto.memory.UserRepoMemoryImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -29,5 +30,9 @@ public class UserManager {
 
     public void loginUser(String email, String password, LoginListener loginListener) {
         mUserRepository.loginUser(email, password, loginListener);
+    }
+
+    public void sendResetPasswordEmail(String email, ResetPasswordListener listener) {
+        mUserRepository.sendResetPasswordEmail(email, listener);
     }
 }
