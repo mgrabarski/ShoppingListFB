@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -140,7 +141,13 @@ public class LoginActivity extends AppCompatActivity implements
     public void displayRegistrationSuccess(User user) {
         AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
                 getString(R.string.information),
-                getString(R.string.registration_success));
+                getString(R.string.registration_success),
+                getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onBackPressed();
+                    }
+                });
         builder.show();
     }
 
