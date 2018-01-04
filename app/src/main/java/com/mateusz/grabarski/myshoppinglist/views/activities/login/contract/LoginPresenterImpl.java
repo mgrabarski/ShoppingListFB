@@ -1,19 +1,8 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputValidator;
-import com.mateusz.grabarski.myshoppinglist.views.activities.login.LoginActivity;
 
 /**
  * Created by MGrabarski on 22.12.2017.
@@ -112,5 +101,17 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
     @Override
     public void loginByGoogle(GoogleSignInAccount account) {
         mModel.loginByGoogle(account);
+    }
+
+    @Override
+    public void loginByGoogleSuccess() {
+        mView.hideProgressDialog();
+        mView.displayDashboard();
+    }
+
+    @Override
+    public void loginByGoogleFailed(String errorMessage) {
+        mView.hideProgressDialog();
+        mView.displayMessage(errorMessage);
     }
 }

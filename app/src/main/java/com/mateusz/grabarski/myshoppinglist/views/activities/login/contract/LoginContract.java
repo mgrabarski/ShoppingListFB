@@ -44,6 +44,8 @@ public interface LoginContract {
         void displaySendResetPasswordEmailSuccess();
 
         void displaySendResetPasswordEmailFailed(String errorMessage);
+
+        void displayMessage(String message);
     }
 
     interface Presenter {
@@ -66,5 +68,9 @@ public interface LoginContract {
         void sendResetPasswordEmailFailed(String errorMessage);
 
         void loginByGoogle(GoogleSignInAccount account);
+
+        void loginByGoogleSuccess();
+
+        void loginByGoogleFailed(String errorMessage);
     }
 }

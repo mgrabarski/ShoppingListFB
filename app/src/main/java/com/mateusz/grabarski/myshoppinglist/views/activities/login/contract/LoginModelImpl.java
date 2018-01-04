@@ -80,12 +80,12 @@ public class LoginModelImpl implements LoginContract.Model {
         mUserManager.loginByGoogle(account, new LoginByGoogleListener(){
             @Override
             public void onLoginSuccess(User user) {
-
+                mPresenter.loginByGoogleSuccess();
             }
 
             @Override
             public void onLoginFailed(String errorMessage) {
-
+                mPresenter.loginByGoogleFailed(errorMessage);
             }
         });
     }

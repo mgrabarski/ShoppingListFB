@@ -212,6 +212,14 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void displayMessage(String message) {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                message);
+        builder.show();
+    }
+
+    @Override
     public void onSignUp(String name, String email, String password, String confirmPassword) {
         mPresenter.signUp(name, email, password, confirmPassword);
     }
