@@ -19,7 +19,7 @@ public class UserManager {
     private UserRepository mUserRepository;
 
     public UserManager() {
-        mUserRepository = new UserRepoMemoryImpl();
+        mUserRepository = new UserRepoFirebaseImpl();
     }
 
     public void registerUser(User user, CreateNewAccountListener listener) {
