@@ -55,5 +55,8 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.8.0'
     minSdkJellybeanCompile 'com.firebaseui:firebase-ui-auth:3.1.2'
 
+    // Dependencies for local unit tests
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-all:1.10.19"
 }
 apply plugin: 'com.google.gms.google-services'

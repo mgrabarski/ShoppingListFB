@@ -1,5 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.memory;
 
+import android.os.Handler;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
@@ -34,12 +36,20 @@ public class UserRepoMemoryImpl implements UserRepository {
     public void insertUser(final User user, final CreateNewAccountListener listener) {
         mUsers.add(user);
 
+        final Handler handler = new Handler();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(2000);
-                    listener.onCreateAccountSuccess(user);
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onCreateAccountSuccess(user);
+                        }
+                    });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -67,6 +77,7 @@ public class UserRepoMemoryImpl implements UserRepository {
 
     @Override
     public void loginUser(final String email, final String password, final LoginListener loginListener) {
+        final Handler handler = new Handler();
 
         new Thread(new Runnable() {
             @Override
@@ -74,14 +85,19 @@ public class UserRepoMemoryImpl implements UserRepository {
                 try {
                     Thread.sleep(2000);
 
-                    for (User user : mUsers) {
-                        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                            loginListener.onLoginSuccess(user);
-                            return;
-                        }
-                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (User user : mUsers) {
+                                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                                    loginListener.onLoginSuccess(user);
+                                    return;
+                                }
+                            }
 
-                    loginListener.onLoginFailed("Failed login");
+                            loginListener.onLoginFailed("Failed login");
+                        }
+                    });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -91,6 +107,7 @@ public class UserRepoMemoryImpl implements UserRepository {
 
     @Override
     public void sendResetPasswordEmail(final String email, final ResetPasswordListener listener) {
+        final Handler handler = new Handler();
 
         new Thread(new Runnable() {
             @Override
@@ -98,14 +115,19 @@ public class UserRepoMemoryImpl implements UserRepository {
                 try {
                     Thread.sleep(2000);
 
-                    for (User user : mUsers)
-                        if (user.getEmail().equals(email)) {
-                            user.setPassword("reset");
-                            listener.onSendSuccess();
-                            return;
-                        }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (User user : mUsers)
+                                if (user.getEmail().equals(email)) {
+                                    user.setPassword("reset");
+                                    listener.onSendSuccess();
+                                    return;
+                                }
 
-                    listener.onSendFailed("Filed password reset");
+                            listener.onSendFailed("Filed password reset");
+                        }
+                    });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

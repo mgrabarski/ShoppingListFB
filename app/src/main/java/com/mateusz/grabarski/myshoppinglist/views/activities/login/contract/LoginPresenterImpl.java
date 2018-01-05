@@ -40,10 +40,10 @@ public class LoginPresenterImpl implements LoginContract.Presenter {
             mView.displayEmailError();
         else if (!inputValidator.isPasswordLengthValid(password))
             mView.displayPasswordError();
-        else if (inputValidator.isUserNameValid(name))
-            mView.displayUserNameError();
         else if (!inputValidator.isPasswordAndConfirmPasswordValid(password, confirmPassword))
             mView.displayPasswordMatchError();
+        else if (!inputValidator.isUserNameValid(name))
+            mView.displayUserNameError();
         else {
             mView.showProgressDialog();
             mModel.createUser(name, email, password, confirmPassword);

@@ -44,11 +44,11 @@ public class InputValidatorTest {
 
     @Test
     public void testUserNameValidation() {
-        assertTrue(!mInputValidator.isUserNameValid("Some name"));
-        assertTrue(!mInputValidator.isUserNameValid("Mateusz"));
+        assertTrue(mInputValidator.isUserNameValid("Some name"));
+        assertTrue(mInputValidator.isUserNameValid("Mateusz"));
 
-        assertFalse(mInputValidator.isUserNameValid(""));
-        assertFalse(mInputValidator.isUserNameValid(null));
+        assertFalse(!mInputValidator.isUserNameValid(""));
+        assertFalse(!mInputValidator.isUserNameValid(null));
     }
 
     @Test

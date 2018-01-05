@@ -1,12 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.login.contract;
 
-import android.support.annotation.NonNull;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
@@ -34,7 +28,6 @@ public class LoginModelImpl implements LoginContract.Model {
             @Override
             public void onLoginSuccess(User user) {
                 mPresenter.loginByEmailSuccess(user);
-                // TODO: 03.01.2018 save user email in shared preferences
             }
 
             @Override

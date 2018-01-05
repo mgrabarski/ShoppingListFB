@@ -40,7 +40,7 @@ public class InputValidator {
     }
 
     public boolean isUserNameValid(String userName) {
-        return TextUtils.isEmpty(userName);
+        return !(userName == null || userName.length() == 0);
     }
 
     public boolean isPasswordAndConfirmPasswordValid(String password, String confirmPassword) {
