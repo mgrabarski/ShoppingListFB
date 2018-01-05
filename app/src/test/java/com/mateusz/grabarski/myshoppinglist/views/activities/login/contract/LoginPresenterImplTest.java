@@ -138,5 +138,15 @@ public class LoginPresenterImplTest {
         verify(mView).showProgressDialog();
     }
 
-    
+    @Test
+    public void showEmailErrorWhenPasswordIsNotValidWhenTryResetPassword() throws Exception {
+        mPresenter.resetPassword(INCORRECT_EMAIL_ADDRESS);
+        verify(mView).displayEmailError();
+    }
+
+    @Test
+    public void showProgressIndicatorWhenResetPasswordEmailIsSending() throws Exception {
+        mPresenter.resetPassword(CORRECT_EMAIL_ADDRESS);
+        verify(mView).showProgressDialog();
+    }
 }
