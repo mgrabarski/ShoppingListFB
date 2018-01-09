@@ -46,4 +46,8 @@ public class InputValidator {
     public boolean isPasswordAndConfirmPasswordValid(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
+
+    public boolean isShoppingListNameValid(String name) {
+        return name != null && name.length() != 0;
+    }
 }

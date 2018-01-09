@@ -60,6 +60,15 @@ public class InputValidatorTest {
         assertFalse(mInputValidator.isPasswordAndConfirmPasswordValid("asd", "asdf"));
     }
 
+    @Test
+    public void testShoppingListNameValid() throws Exception {
+        assertFalse(mInputValidator.isShoppingListNameValid(null));
+        assertFalse(mInputValidator.isShoppingListNameValid(""));
+
+        assertTrue(mInputValidator.isShoppingListNameValid("a"));
+        assertTrue(mInputValidator.isShoppingListNameValid("aaa"));
+    }
+
     @After
     public void tearDown() throws Exception {
         mInputValidator = null;
