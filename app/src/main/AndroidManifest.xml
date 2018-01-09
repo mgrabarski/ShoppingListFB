@@ -21,7 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.activities.login.LoginActivity" />
-        <activity android:name=".views.activities.dashboard.DashboardActivity"/>
+        <activity android:name=".views.activities.dashboard.DashboardActivity" />
+        <activity android:name=".views.activities.profile.EditProfileActivity" />
+        <activity android:name=".views.activities.settings.SettingsActivity" />
+        <activity android:name=".views.activities.help.HelpActivity" />
     </application>
 
 </manifest>

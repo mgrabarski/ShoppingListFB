@@ -16,8 +16,13 @@ import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.ShoppingListFragment;
+import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.login.LoginActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,19 +84,19 @@ public class DashboardActivity extends AppCompatActivity implements
                 fragment = ShoppingListFragment.newInstance();
                 break;
             case R.id.dashboard_drawer_your_friends:
-                // TODO: 09.01.2018
+                fragment = FriendsFragment.newInstance();
                 break;
             case R.id.dashboard_drawer_shared_lists:
-                // TODO: 09.01.2018
+                fragment = SharedListsFragment.newInstance();
                 break;
             case R.id.dashboard_drawer_edit_profile:
-                // TODO: 09.01.2018
+                activity = new EditProfileActivity();
                 break;
             case R.id.dashboard_drawer_settings:
-                // TODO: 09.01.2018
+                activity = new SettingsActivity();
                 break;
             case R.id.dashboard_drawer_help_feedback:
-                // TODO: 09.01.2018  
+                activity = new HelpActivity();
                 break;
         }
 
