@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.ShoppingListFragment;
+import com.mateusz.grabarski.myshoppinglist.views.activities.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,12 +48,63 @@ public class DashboardActivity extends AppCompatActivity implements
         drawerToggle = setupDrawerToggle();
         drawerToggle.syncState();
 
+        setupDrawerContent(navigationView);
+
         if (getSupportFragmentManager().getBackStackEntryCount() == 0)
-            replaceAndAddToBackStackFragment(ShoppingListFragment.newInstance());
+            selectDrawerItem(navigationView.getMenu().getItem(0));
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    private void selectDrawerItem(MenuItem menuItem) {
+
+        Fragment fragment = null;
+        AppCompatActivity activity = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.dashboard_drawer_shopping_lists:
+                fragment = ShoppingListFragment.newInstance();
+                break;
+            case R.id.dashboard_drawer_your_friends:
+                // TODO: 09.01.2018
+                break;
+            case R.id.dashboard_drawer_shared_lists:
+                // TODO: 09.01.2018
+                break;
+            case R.id.dashboard_drawer_edit_profile:
+                // TODO: 09.01.2018
+                break;
+            case R.id.dashboard_drawer_settings:
+                // TODO: 09.01.2018
+                break;
+            case R.id.dashboard_drawer_help_feedback:
+                // TODO: 09.01.2018  
+                break;
+        }
+
+        if (fragment != null) {
+            replaceAndAddToBackStackFragment(fragment);
+            menuItem.setChecked(true);
+            setTitle(menuItem.getTitle());
+            drawerLayout.closeDrawers();
+        } else if (activity != null) {
+            drawerLayout.closeDrawers();
+            Intent intent = new Intent(this, activity.getClass());
+            startActivity(intent);
+        }
     }
 
     @Override
