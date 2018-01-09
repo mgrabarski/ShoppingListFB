@@ -10,15 +10,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.ShoppingListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements
+        ShoppingListFragment.ShoppingListFragmentListener,
+        GetShoppingListDialog.GetShoppingListDialogInterface {
 
     @BindView(R.id.activity_dashboard_toolbar)
     Toolbar toolbar;
@@ -87,4 +91,14 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onAddNewShoppingListClick() {
+        GetShoppingListDialog dialog = GetShoppingListDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onShoppingListNameTyped(String shoppingListName) {
+        Log.d(DashboardActivity.class.getSimpleName(), "onShoppingListNameTyped: " + shoppingListName);
+    }
 }
