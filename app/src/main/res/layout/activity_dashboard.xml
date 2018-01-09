@@ -28,8 +28,7 @@
         android:id="@+id/activity_dashboard_navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
-
-        <include layout="@layout/view_navigation_drawer" />
-    </android.support.design.widget.NavigationView>
+        android:layout_gravity="start"
+        app:headerLayout="@layout/view_navigation_drawer_header"
+        app:menu="@menu/dashboard_drawer_view" />
 </android.support.v4.widget.DrawerLayout>
