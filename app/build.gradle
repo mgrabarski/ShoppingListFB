@@ -21,18 +21,6 @@ android {
 
     productFlavors {
 
-        // Build variant with minSdk 16 to include Facebook and FirebaseUI libraries.
-        minSdkJellybean {
-            dimension "minSdkVersion"
-            minSdkVersion 16
-        }
-
-        // Build variant with minSdk 14, excludes Facebook and FirebaseUI libraries.
-        minSdkIcs {
-            dimension "minSdkVersion"
-            minSdkVersion 14
-        }
-
     }
 
     testOptions {
@@ -53,7 +41,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:11.8.0'
     compile 'com.google.firebase:firebase-auth:11.8.0'
     compile 'com.google.firebase:firebase-database:11.8.0'
-    minSdkJellybeanCompile 'com.firebaseui:firebase-ui-auth:3.1.2'
+    compile 'com.firebaseui:firebase-ui-auth:3.1.2'
 
     // Dependencies for local unit tests
     testCompile "junit:junit:4.12"
