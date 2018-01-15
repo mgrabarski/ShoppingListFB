@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract.EditProfileContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract.EditProfilePresenterImpl;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.fragments.MainEditProfileFragment;
@@ -25,6 +29,7 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     private MainEditProfileFragment mEditProfileFragment;
     private EditProfilePresenterImpl mPresenter;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,47 @@ public class EditProfileActivity extends AppCompatActivity implements
 
     @Override
     public void loadUserProfile(User user) {
+        mUser = user;
         mEditProfileFragment.setUser(user);
+    }
+
+    @Override
+    public User getUserProfileFromView() {
+        User user = mUser;
+
+        user.setName(mEditProfileFragment.getUserName() == null ? "" : mEditProfileFragment.getUserName());
+
+        return user;
+    }
+
+    @Override
+    public void userProfileUpdated() {
+        finish();
+    }
+
+    @Override
+    public void displayUpdateError(String message) {
+        AlertDialog.Builder builder = DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                message);
+        builder.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_edit_profile_save:
+                mPresenter.updateProfile(getUserProfileFromView());
+                break;
+        }
+
+        return true;
     }
 }

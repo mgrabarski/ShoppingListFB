@@ -3,6 +3,7 @@ package com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -30,6 +31,21 @@ public class EditProfileModelImpl implements EditProfileContract.Model {
             @Override
             public void onErrorReceived(String message) {
 
+            }
+        });
+    }
+
+    @Override
+    public void updateUserProfile(User user) {
+        mUserRepository.updateUser(user, new UpdateUserListener() {
+            @Override
+            public void onUpdateSuccess() {
+                mPresenter.updateProfileSuccess();
+            }
+
+            @Override
+            public void onUpdateFailed(String message) {
+                mPresenter.updateProfileFailed(message);
             }
         });
     }

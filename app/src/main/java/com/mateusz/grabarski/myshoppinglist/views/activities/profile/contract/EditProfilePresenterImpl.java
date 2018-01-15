@@ -25,4 +25,19 @@ public class EditProfilePresenterImpl implements EditProfileContract.Presenter {
     public void readyUserProfile(User user) {
         mView.loadUserProfile(user);
     }
+
+    @Override
+    public void updateProfile(User user) {
+        mModel.updateUserProfile(user);
+    }
+
+    @Override
+    public void updateProfileSuccess() {
+        mView.userProfileUpdated();
+    }
+
+    @Override
+    public void updateProfileFailed(String message) {
+        mView.displayUpdateError(message);
+    }
 }

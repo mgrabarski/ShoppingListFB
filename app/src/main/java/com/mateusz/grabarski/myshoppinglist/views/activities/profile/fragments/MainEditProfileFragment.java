@@ -108,6 +108,10 @@ public class MainEditProfileFragment extends Fragment {
         });
     }
 
+    public String getUserName() {
+        return nameEt != null ? nameEt.getText().toString() : null;
+    }
+
     public interface MainEditProfileFragmentListener {
         void onChangeAvatarClick();
 

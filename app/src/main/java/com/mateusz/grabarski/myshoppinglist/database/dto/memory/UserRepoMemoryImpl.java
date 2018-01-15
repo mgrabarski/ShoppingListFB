@@ -10,6 +10,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentL
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class UserRepoMemoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user, UpdateUserListener listener) {
         for (int i = 0; i < mUsers.size(); i++) {
             if (mUsers.get(i).equals(user)) {
                 mUsers.set(i, user);

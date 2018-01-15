@@ -6,6 +6,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentL
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 /**
@@ -16,7 +17,7 @@ public interface UserRepository {
 
     void insertUser(User user, CreateNewAccountListener listener);
 
-    void updateUser(User user);
+    void updateUser(User user, UpdateUserListener listener);
 
     void getUserByEmail(String email, CurrentLoginUserListener listener);
 

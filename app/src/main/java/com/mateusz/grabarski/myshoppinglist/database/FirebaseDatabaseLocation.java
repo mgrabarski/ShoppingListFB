@@ -19,12 +19,12 @@ public class FirebaseDatabaseLocation {
         return FirebaseDatabase.getInstance().getReference();
     }
 
-    public DatabaseReference getUserDatabaseReference() {
+    public DatabaseReference getUsersDatabaseReference() {
         return getDatabaseReference().child(FIREBASE_USERS);
     }
 
     public DatabaseReference getUserDatabaseReference(String email) {
         InputFormatter inputFormatter = new InputFormatter();
-        return getUserDatabaseReference().child(inputFormatter.encodeEmail(email));
+        return getUsersDatabaseReference().child(inputFormatter.encodeEmail(email));
     }
 }
