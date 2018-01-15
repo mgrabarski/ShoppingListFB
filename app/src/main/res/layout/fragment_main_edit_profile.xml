@@ -11,21 +11,32 @@
         android:id="@+id/fragment_main_edit_profile_header_view"
         android:layout_width="0dp"
         android:layout_height="192dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/fragment_main_edit_profile_avatar_iv"
+    <FrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_main_edit_profile_header_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/common_full_open_on_phone" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/fragment_main_edit_profile_avatar_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true" />
+
+        <ImageView
+            android:id="@+id/fragment_main_edit_profile_avatar_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/common_full_open_on_phone" />
+    </FrameLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/fragment_main_edit_profile_name_til"

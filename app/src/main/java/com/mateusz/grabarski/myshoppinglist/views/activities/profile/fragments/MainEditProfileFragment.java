@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -41,6 +42,9 @@ public class MainEditProfileFragment extends Fragment {
 
     @BindView(R.id.fragment_main_edit_profile_avatar_iv)
     ImageView avatarIv;
+
+    @BindView(R.id.fragment_main_edit_profile_avatar_progress_bar)
+    ProgressBar avatarPb;
 
     Unbinder unbinder;
 
@@ -95,17 +99,22 @@ public class MainEditProfileFragment extends Fragment {
         nameEt.setText(user.getName());
         emailEt.setText(user.getEmail());
 
-        Picasso.with(getContext()).load(user.getPictureUrl()).fit().centerCrop().into(avatarIv, new Callback() {
-            @Override
-            public void onSuccess() {
+        if (user.getPictureUrl() == null) {
+            avatarPb.setVisibility(View.GONE);
+            avatarIv.setImageResource(R.drawable.ic_empty_avatar);
+        } else
+            Picasso.with(getContext()).load(user.getPictureUrl()).fit().centerCrop().into(avatarIv, new Callback() {
+                @Override
+                public void onSuccess() {
+                    avatarPb.setVisibility(View.GONE);
+                }
 
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
+                @Override
+                public void onError() {
+                    avatarPb.setVisibility(View.GONE);
+                    avatarIv.setImageResource(R.drawable.ic_empty_avatar);
+                }
+            });
     }
 
     public String getUserName() {
