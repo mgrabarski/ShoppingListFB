@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
@@ -25,8 +26,8 @@ public class UserRepoMemoryImpl implements UserRepository {
     public UserRepoMemoryImpl() {
         mUsers = new ArrayList<>();
 
-        User user1 = new User("Mateusz", "mateusz.grabarski@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_1);
-        User user2 = new User("Test", "test@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_2);
+        User user1 = new User("Mateusz", "mateusz.grabarski@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_1, "https://t3.ftcdn.net/jpg/01/04/10/10/240_F_104101070_wbEDt3CmlzqnPbdmOlVCL7Q7yu9mCduz.jpg");
+        User user2 = new User("Test", "test@gmail.com", "zaqwsx", Constants.FakeData.FAKE_DATE_2, "https://t3.ftcdn.net/jpg/01/04/10/10/240_F_104101070_wbEDt3CmlzqnPbdmOlVCL7Q7yu9mCduz.jpg");
 
         mUsers.add(user1);
         mUsers.add(user2);
@@ -67,12 +68,13 @@ public class UserRepoMemoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public void getUserByEmail(String email, CurrentLoginUserListener listener) {
         for (User user : mUsers)
-            if (user.getEmail().equals(email))
-                return user;
+            if (user.getEmail().equals(email)) {
+                listener.onCurrentLoginUserLoaded(user);
+            }
 
-        return null;
+        listener.onCurrentLoginUserLoaded(null);
     }
 
     @Override
@@ -138,5 +140,10 @@ public class UserRepoMemoryImpl implements UserRepository {
     @Override
     public void loginUserByGoogle(GoogleSignInAccount account, LoginByGoogleListener listener) {
 
+    }
+
+    @Override
+    public void getCurrentLoginUser(CurrentLoginUserListener listener) {
+        listener.onCurrentLoginUserLoaded(mUsers.get(0));
     }
 }

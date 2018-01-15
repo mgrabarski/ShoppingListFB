@@ -13,15 +13,17 @@ public class User {
     private String email;
     private String password;
     private long createDate;
+    private String pictureUrl;
 
     public User() {
     }
 
-    public User(String name, String email, String password, long createDate) {
+    public User(String name, String email, String password, long createDate, String pictureUrl) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.createDate = createDate;
+        this.pictureUrl = pictureUrl;
     }
 
     public String getName() {
@@ -58,6 +60,14 @@ public class User {
         this.createDate = createDate;
     }
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,7 +78,9 @@ public class User {
         if (createDate != user.createDate) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return password != null ? password.equals(user.password) : user.password == null;
+        if (password != null ? !password.equals(user.password) : user.password != null)
+            return false;
+        return pictureUrl != null ? pictureUrl.equals(user.pictureUrl) : user.pictureUrl == null;
     }
 
     @Override
@@ -77,6 +89,7 @@ public class User {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (int) (createDate ^ (createDate >>> 32));
+        result = 31 * result + (pictureUrl != null ? pictureUrl.hashCode() : 0);
         return result;
     }
 

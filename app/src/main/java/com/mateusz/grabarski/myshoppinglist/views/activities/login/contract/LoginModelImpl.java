@@ -39,7 +39,7 @@ public class LoginModelImpl implements LoginContract.Model {
 
     @Override
     public void createUser(String name, String email, String password, String confirmPassword) {
-        User user = new User(name, email, password, System.currentTimeMillis());
+        User user = new User(name, email, password, System.currentTimeMillis(), null);
         mUserManager.registerUser(user, new CreateNewAccountListener() {
             @Override
             public void onCreateAccountSuccess(User user) {

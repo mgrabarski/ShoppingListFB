@@ -8,16 +8,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
+import com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract.EditProfileContract;
+import com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract.EditProfilePresenterImpl;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.fragments.MainEditProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditProfileActivity extends AppCompatActivity implements
+        EditProfileContract.View,
         MainEditProfileFragment.MainEditProfileFragmentListener {
 
     @BindView(R.id.activity_edit_profile_toolbar)
     Toolbar toolbar;
+
+    private MainEditProfileFragment mEditProfileFragment;
+    private EditProfilePresenterImpl mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +32,19 @@ public class EditProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
 
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
-            replaceAndAddToBackStackFragment(MainEditProfileFragment.newInstance());
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            mEditProfileFragment = MainEditProfileFragment.newInstance();
+            replaceAndAddToBackStackFragment(mEditProfileFragment);
+        } else {
+            mEditProfileFragment = (MainEditProfileFragment) getSupportFragmentManager()
+                    .getFragments()
+                    .get(getSupportFragmentManager().getBackStackEntryCount() - 1);
+        }
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mPresenter = new EditProfilePresenterImpl(this);
     }
 
     @Override
@@ -59,5 +74,15 @@ public class EditProfileActivity extends AppCompatActivity implements
     @Override
     public void onChangeAvatarClick() {
 
+    }
+
+    @Override
+    public void loadUserData() {
+        mPresenter.loadUserData();
+    }
+
+    @Override
+    public void loadUserProfile(User user) {
+        mEditProfileFragment.setUser(user);
     }
 }

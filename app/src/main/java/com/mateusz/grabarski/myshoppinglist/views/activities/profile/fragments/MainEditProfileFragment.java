@@ -9,8 +9,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +38,9 @@ public class MainEditProfileFragment extends Fragment {
 
     @BindView(R.id.fragment_main_edit_profile_email_til)
     TextInputLayout emailTil;
+
+    @BindView(R.id.fragment_main_edit_profile_avatar_iv)
+    ImageView avatarIv;
 
     Unbinder unbinder;
 
@@ -68,6 +75,12 @@ public class MainEditProfileFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.loadUserData();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -78,7 +91,26 @@ public class MainEditProfileFragment extends Fragment {
         mListener.onChangeAvatarClick();
     }
 
+    public void setUser(User user) {
+        nameEt.setText(user.getName());
+        emailEt.setText(user.getEmail());
+
+        Picasso.with(getContext()).load(user.getPictureUrl()).fit().centerCrop().into(avatarIv, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+
     public interface MainEditProfileFragmentListener {
         void onChangeAvatarClick();
+
+        void loadUserData();
     }
 }
