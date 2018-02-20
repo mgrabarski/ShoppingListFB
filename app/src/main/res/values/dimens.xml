@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="navigation_drawer_header_size">178dp</dimen>
+    <dimen name="navigation_drawer_header_user_info_size">56dp</dimen>
+    <dimen name="navigation_drawer_avatar_size">70dp</dimen>
+    <dimen name="navigation_drawer_standard_margin">16dp</dimen>
+    <dimen name="navigation_drawer_name_text_size">16sp</dimen>
+    <dimen name="navigation_drawer_email_text_size">14sp</dimen>
+    <dimen name="navigation_drawer_avatar_top_margin">38dp</dimen>
+</resources>
