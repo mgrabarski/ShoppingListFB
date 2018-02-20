@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +26,7 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments
 import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.CreateShoppingListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -181,7 +181,9 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onShoppingListNameTyped(String shoppingListName) {
-        Log.d(DashboardActivity.class.getSimpleName(), "onShoppingListNameTyped: " + shoppingListName);
+        Intent intent = new Intent(this, CreateShoppingListActivity.class);
+        intent.putExtra(CreateShoppingListActivity.KEY_SHOPPING_LIST_NAME, shoppingListName);
+        startActivity(intent);
     }
 
     @Override

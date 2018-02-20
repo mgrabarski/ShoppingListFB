@@ -28,6 +28,9 @@
             android:parentActivityName=".views.activities.dashboard.DashboardActivity" />
         <activity android:name=".views.activities.settings.SettingsActivity" />
         <activity android:name=".views.activities.help.HelpActivity" />
+        <activity
+            android:name=".views.activities.shopping.create.CreateShoppingListActivity"
+            android:parentActivityName=".views.activities.dashboard.DashboardActivity" />
     </application>
 
 </manifest>
