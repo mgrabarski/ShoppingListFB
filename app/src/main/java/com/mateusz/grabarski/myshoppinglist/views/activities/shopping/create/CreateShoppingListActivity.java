@@ -6,16 +6,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract.CreateShoppingListContract;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract.CreateShoppingListPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateShoppingListActivity extends AppCompatActivity {
+public class CreateShoppingListActivity extends AppCompatActivity implements
+        CreateShoppingListContract.View {
 
     public static final String KEY_SHOPPING_LIST_NAME = "SHOPPING_LIST_NAME";
 
     @BindView(R.id.activity_create_shopping_list_toolbar)
     Toolbar toolbar;
+
+    private CreateShoppingListContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +30,10 @@ public class CreateShoppingListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        String listName = getIntent().getExtras().getString(KEY_SHOPPING_LIST_NAME);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getIntent().getExtras().getString(KEY_SHOPPING_LIST_NAME));
+        getSupportActionBar().setTitle(listName);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +41,9 @@ public class CreateShoppingListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        mPresenter = new CreateShoppingListPresenter(this);
+        mPresenter.setListName(listName);
     }
 
     @Override
