@@ -87,7 +87,8 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
         switch (item.getItemId()) {
             case R.id.menu_create_shopping_list_add:
-                SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(), null);
+                SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(),
+                        SingleShoppingItemDialog.class.getSimpleName());
                 break;
         }
 
@@ -140,7 +141,8 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
     @Override
     public void onEditClick(ShoppingItem item) {
-        SingleShoppingItemDialog.newInstance(item).show(getSupportFragmentManager(), null);
+        SingleShoppingItemDialog.newInstance(item).show(getSupportFragmentManager(),
+                SingleShoppingItemDialog.class.getSimpleName());
     }
 
     @Override
