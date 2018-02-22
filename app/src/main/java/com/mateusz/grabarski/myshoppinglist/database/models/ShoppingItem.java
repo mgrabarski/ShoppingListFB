@@ -1,10 +1,12 @@
 package com.mateusz.grabarski.myshoppinglist.database.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Mateusz Grabarski on 20.02.2018.
  */
 
-public class ShoppingItem {
+public class ShoppingItem implements Serializable {
 
     private long createDate;
     private float number;

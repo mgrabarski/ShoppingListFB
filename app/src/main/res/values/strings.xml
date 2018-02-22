@@ -44,4 +44,5 @@
     <string name="number_can_not_be_empty">Number can not be empty.</string>
     <string name="number_must_be_higher_then_zero">Number must be higher then zero</string>
     <string name="add_new_item">Add new item</string>
+    <string name="update">Update</string>
 </resources>

@@ -24,7 +24,8 @@ import butterknife.ButterKnife;
 
 public class CreateShoppingListActivity extends AppCompatActivity implements
         CreateShoppingListContract.View,
-        SingleShoppingItemDialog.SingleShoppingItemDialogInterface, CreateShoppingListListener {
+        SingleShoppingItemDialog.SingleShoppingItemDialogInterface,
+        CreateShoppingListListener {
 
     public static final String KEY_SHOPPING_LIST_NAME = "SHOPPING_LIST_NAME";
 
@@ -93,8 +94,11 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onAddNewShoppingItem(String name, float number) {
-        mPresenter.addNewShoppingItem(name, number);
+    public void onAddNewShoppingItem(ShoppingItem item, int flow) {
+        if (flow == SingleShoppingItemDialog.ADD_NEW)
+            mPresenter.addNewShoppingItem(item);
+        else if (flow == SingleShoppingItemDialog.EDIT_ITEM)
+            mPresenter.editItem(item);
     }
 
     @Override
@@ -104,7 +108,7 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
     @Override
     public void onEditClick(ShoppingItem item) {
-
+        SingleShoppingItemDialog.newInstance(item).show(getSupportFragmentManager(), null);
     }
 
     @Override

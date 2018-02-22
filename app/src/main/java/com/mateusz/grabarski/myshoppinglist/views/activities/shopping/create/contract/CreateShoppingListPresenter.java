@@ -35,13 +35,8 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     }
 
     @Override
-    public void addNewShoppingItem(String name, float number) {
-        ShoppingItem item = ShoppingItem.getNewShoppingItem();
-        item.setNumber(number);
-        item.setName(name);
-
+    public void addNewShoppingItem(ShoppingItem item) {
         mShoppingList.getShoppingItems().add(item);
-
         mView.updateList(mShoppingList.getShoppingItems());
     }
 
@@ -53,6 +48,18 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     @Override
     public void removeShoppingItem(ShoppingItem item) {
         mShoppingList.getShoppingItems().remove(item);
+        mView.updateList(mShoppingList.getShoppingItems());
+    }
+
+    @Override
+    public void editItem(ShoppingItem item) {
+        for (int i = 0; i < mShoppingList.getShoppingItems().size(); i++) {
+            if (mShoppingList.getShoppingItems().get(i).getCreateDate() == item.getCreateDate()) {
+                mShoppingList.getShoppingItems().set(i, item);
+                break;
+            }
+        }
+
         mView.updateList(mShoppingList.getShoppingItems());
     }
 }

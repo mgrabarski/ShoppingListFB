@@ -27,9 +27,11 @@ public interface CreateShoppingListContract {
 
         void setCurrentUser(User user);
 
-        void addNewShoppingItem(String name, float number);
-
         List<ShoppingItem> getShoppingList();
+
+        void addNewShoppingItem(ShoppingItem item);
+
+        void editItem(ShoppingItem item);
 
         void removeShoppingItem(ShoppingItem item);
     }

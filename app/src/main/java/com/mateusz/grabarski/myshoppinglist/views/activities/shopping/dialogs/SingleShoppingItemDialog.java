@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -15,12 +16,22 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 
 /**
  * Created by Mateusz Grabarski on 21.02.2018.
  */
 
 public class SingleShoppingItemDialog extends DialogFragment {
+
+    public static final int ADD_NEW = 1;
+    public static final int EDIT_ITEM = 2;
+
+    private static final String KEY_FLOW = "FLOW";
+    private static final String KEY_ITEM = "ITEM";
+
+    private int flow;
+    private ShoppingItem item;
 
     private EditText mItemNameEt, mItemNumberEt;
     private TextInputLayout mItemNameTil, mItemNumberTil;
@@ -30,6 +41,18 @@ public class SingleShoppingItemDialog extends DialogFragment {
     public static SingleShoppingItemDialog newInstance() {
 
         Bundle args = new Bundle();
+        args.putInt(KEY_FLOW, ADD_NEW);
+
+        SingleShoppingItemDialog fragment = new SingleShoppingItemDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static SingleShoppingItemDialog newInstance(ShoppingItem item) {
+
+        Bundle args = new Bundle();
+        args.putInt(KEY_FLOW, EDIT_ITEM);
+        args.putSerializable(KEY_ITEM, item);
 
         SingleShoppingItemDialog fragment = new SingleShoppingItemDialog();
         fragment.setArguments(args);
@@ -44,6 +67,21 @@ public class SingleShoppingItemDialog extends DialogFragment {
             mListener = (SingleShoppingItemDialogInterface) context;
         else
             throw new RuntimeException("Activity must implement SingleShoppingItemDialogInterface");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+
+        if (args == null)
+            return;
+
+        flow = args.getInt(KEY_FLOW);
+
+        if (args.containsKey(KEY_ITEM))
+            item = (ShoppingItem) args.getSerializable(KEY_ITEM);
     }
 
     @Override
@@ -77,9 +115,14 @@ public class SingleShoppingItemDialog extends DialogFragment {
         mItemNameTil = view.findViewById(R.id.dialog_single_shopping_item_name_til);
         mItemNumberTil = view.findViewById(R.id.dialog_single_shopping_item_value_til);
 
+        if (flow == EDIT_ITEM) {
+            mItemNameEt.setText(item.getName());
+            mItemNumberEt.setText(String.valueOf(item.getNumber()));
+        }
+
         builder.setView(view);
 
-        builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(flow == ADD_NEW ? R.string.add : R.string.update, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -107,11 +150,17 @@ public class SingleShoppingItemDialog extends DialogFragment {
             return false;
         }
 
-        mListener.onAddNewShoppingItem(mItemNameEt.getText().toString(), number);
+        if (item == null)
+            item = ShoppingItem.getNewShoppingItem();
+
+        item.setNumber(number);
+        item.setName(mItemNameEt.getText().toString());
+
+        mListener.onAddNewShoppingItem(item, flow);
         return true;
     }
 
     public interface SingleShoppingItemDialogInterface {
-        void onAddNewShoppingItem(String name, float number);
+        void onAddNewShoppingItem(ShoppingItem item, int flow);
     }
 }
