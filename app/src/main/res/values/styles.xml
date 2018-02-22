@@ -26,4 +26,11 @@
         <item name="android:windowBackground">@drawable/shopping_background</item>
     </style>
 
+    <style name="DefaultAppToolbar" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
 </resources>

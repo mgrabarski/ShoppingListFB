@@ -36,4 +36,16 @@
     <string name="your_friends">Your friends</string>
     <string name="shared_lists">Shared lists</string>
     <string name="help_and_feedback"><![CDATA[Help & feedback]]></string>
+    <string name="save">Save</string>
+    <string name="item_name">Item name</string>
+    <string name="item_value">Item value</string>
+    <string name="add">Add</string>
+    <string name="name_can_not_be_empty">Name can not be empty.</string>
+    <string name="number_can_not_be_empty">Number can not be empty.</string>
+    <string name="number_must_be_higher_then_zero">Number must be higher then zero</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="update">Update</string>
+    <string name="shopping_list_is_not_empty">Shopping list is not empty. Would you like to save it?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

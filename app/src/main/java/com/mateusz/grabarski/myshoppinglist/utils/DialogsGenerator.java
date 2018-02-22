@@ -34,4 +34,16 @@ public class DialogsGenerator {
         builder.setPositiveButton(positiveText, positiveListener);
         return builder;
     }
+
+    public static AlertDialog.Builder getMessageDialog(Context context,
+                                                       String title,
+                                                       String message,
+                                                       String positiveText,
+                                                       String negativeText,
+                                                       DialogInterface.OnClickListener positiveListener,
+                                                       DialogInterface.OnClickListener negativeListener) {
+        AlertDialog.Builder builder = getMessageDialog(context, title, message, positiveText, positiveListener);
+        builder.setNegativeButton(negativeText, negativeListener);
+        return builder;
+    }
 }

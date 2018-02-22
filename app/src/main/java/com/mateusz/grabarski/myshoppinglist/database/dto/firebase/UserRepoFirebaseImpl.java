@@ -1,7 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.firebase;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,10 +16,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+import com.mateusz.grabarski.myshoppinglist.utils.InputFormatter;
 
 /**
  * Created by MGrabarski on 30.12.2017.
@@ -63,13 +65,24 @@ public class UserRepoFirebaseImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user) {
-
+    public void updateUser(User user, final UpdateUserListener listener) {
+        mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
+                .setValue(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            listener.onUpdateSuccess();
+                        } else {
+                            listener.onUpdateFailed(task.getException().getMessage());
+                        }
+                    }
+                });
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return null;
+    public void getUserByEmail(String email, CurrentLoginUserListener listener) {
+
     }
 
     @Override
@@ -114,7 +127,7 @@ public class UserRepoFirebaseImpl implements UserRepository {
     }
 
     @Override
-    public void loginUserByGoogle(GoogleSignInAccount account, final LoginByGoogleListener listener) {
+    public void loginUserByGoogle(final GoogleSignInAccount account, final LoginByGoogleListener listener) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -123,7 +136,7 @@ public class UserRepoFirebaseImpl implements UserRepository {
                         if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                            final User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), null, System.currentTimeMillis());
+                            final User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), null, System.currentTimeMillis(), account.getPhotoUrl().getPath());
 
                             mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,5 +182,30 @@ public class UserRepoFirebaseImpl implements UserRepository {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void getCurrentLoginUser(final CurrentLoginUserListener listener) {
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        if (userEmail != null) {
+
+            InputFormatter inputFormatter = new InputFormatter();
+
+            String encodeEmail = inputFormatter.encodeEmail(userEmail);
+
+            mFirebaseDatabaseLocation.getUserDatabaseReference(encodeEmail)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            listener.onCurrentLoginUserLoaded(dataSnapshot.getValue(User.class));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            listener.onErrorReceived(databaseError.getMessage());
+                        }
+                    });
+        }
     }
 }

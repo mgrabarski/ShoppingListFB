@@ -10,7 +10,8 @@ import com.mateusz.grabarski.myshoppinglist.utils.InputFormatter;
 
 public class FirebaseDatabaseLocation {
 
-    public static final String FIREBASE_USERS = "/users/";
+    private static final String FIREBASE_USERS = "/users/";
+    private static final String FIREBASE_SHOPPING_LIST = "/shoppingList/";
 
     public FirebaseDatabaseLocation() {
     }
@@ -19,12 +20,21 @@ public class FirebaseDatabaseLocation {
         return FirebaseDatabase.getInstance().getReference();
     }
 
-    public DatabaseReference getUserDatabaseReference() {
+    private DatabaseReference getUsersDatabaseReference() {
         return getDatabaseReference().child(FIREBASE_USERS);
+    }
+
+    private DatabaseReference getShoppingListDatabaseReference() {
+        return getDatabaseReference().child(FIREBASE_SHOPPING_LIST);
     }
 
     public DatabaseReference getUserDatabaseReference(String email) {
         InputFormatter inputFormatter = new InputFormatter();
-        return getUserDatabaseReference().child(inputFormatter.encodeEmail(email));
+        return getUsersDatabaseReference().child(inputFormatter.encodeEmail(email));
+    }
+
+    public DatabaseReference getShoppingListDatabaseReference(String ownerEmail) {
+        InputFormatter inputFormatter = new InputFormatter();
+        return getShoppingListDatabaseReference().child(inputFormatter.encodeEmail(ownerEmail));
     }
 }
