@@ -109,6 +109,6 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
     @Override
     public void onDeleteClick(ShoppingItem item) {
-
+        mPresenter.removeShoppingItem(item);
     }
 }

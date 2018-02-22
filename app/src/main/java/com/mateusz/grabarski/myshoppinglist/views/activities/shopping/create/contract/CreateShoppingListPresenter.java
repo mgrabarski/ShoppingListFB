@@ -49,4 +49,10 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     public List<ShoppingItem> getShoppingList() {
         return mShoppingList.getShoppingItems();
     }
+
+    @Override
+    public void removeShoppingItem(ShoppingItem item) {
+        mShoppingList.getShoppingItems().remove(item);
+        mView.updateList(mShoppingList.getShoppingItems());
+    }
 }

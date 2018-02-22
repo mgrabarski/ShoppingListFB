@@ -30,5 +30,7 @@ public interface CreateShoppingListContract {
         void addNewShoppingItem(String name, float number);
 
         List<ShoppingItem> getShoppingList();
+
+        void removeShoppingItem(ShoppingItem item);
     }
 }
