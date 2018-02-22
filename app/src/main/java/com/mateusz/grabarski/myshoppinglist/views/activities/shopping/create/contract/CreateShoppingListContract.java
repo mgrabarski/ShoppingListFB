@@ -1,5 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract;
 
+import android.os.Bundle;
+
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
@@ -34,5 +36,7 @@ public interface CreateShoppingListContract {
         void editItem(ShoppingItem item);
 
         void removeShoppingItem(ShoppingItem item);
+
+        void saveInBundleList(Bundle outState);
     }
 }

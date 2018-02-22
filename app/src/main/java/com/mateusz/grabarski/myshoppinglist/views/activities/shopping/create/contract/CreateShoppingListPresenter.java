@@ -1,5 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract;
 
+import android.os.Bundle;
+
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -12,16 +14,23 @@ import java.util.List;
 
 public class CreateShoppingListPresenter implements CreateShoppingListContract.Presenter {
 
+    public static final String KEY_SAVE_INSTANT_STATE = "SAVE_INSTANT_STATE";
+
     private CreateShoppingListContract.View mView;
     private CreateShoppingListContract.Model mModel;
 
     private ShoppingList mShoppingList;
 
-    public CreateShoppingListPresenter(CreateShoppingListContract.View view) {
+    public CreateShoppingListPresenter(CreateShoppingListContract.View view, Bundle savedInstanceState) {
         this.mView = view;
         mModel = new CreateShoppingListModelImpl(this);
         mModel.getCurrentUser();
-        mShoppingList = ShoppingList.getNewShoppingList();
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SAVE_INSTANT_STATE)) {
+            mShoppingList = (ShoppingList) savedInstanceState.getSerializable(KEY_SAVE_INSTANT_STATE);
+        } else {
+            mShoppingList = ShoppingList.getNewShoppingList();
+        }
     }
 
     @Override
@@ -49,6 +58,11 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     public void removeShoppingItem(ShoppingItem item) {
         mShoppingList.getShoppingItems().remove(item);
         mView.updateList(mShoppingList.getShoppingItems());
+    }
+
+    @Override
+    public void saveInBundleList(Bundle outState) {
+        outState.putSerializable(KEY_SAVE_INSTANT_STATE, mShoppingList);
     }
 
     @Override

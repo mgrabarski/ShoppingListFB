@@ -60,7 +60,7 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
         shoppingListRv.setLayoutManager(new LinearLayoutManager(this));
 
-        mPresenter = new CreateShoppingListPresenter(this);
+        mPresenter = new CreateShoppingListPresenter(this, savedInstanceState);
         mPresenter.setListName(listName);
 
         mAdapter = new CreateShoppingListAdapter(mPresenter.getShoppingList(), this);
@@ -91,6 +91,13 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
         }
 
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        mPresenter.saveInBundleList(outState);
     }
 
     @Override

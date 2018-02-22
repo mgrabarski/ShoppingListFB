@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.database.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Mateusz Grabarski on 20.02.2018.
  */
 
-public class ShoppingList {
+public class ShoppingList implements Serializable {
 
     private long createDate;
     private long lastChange;
