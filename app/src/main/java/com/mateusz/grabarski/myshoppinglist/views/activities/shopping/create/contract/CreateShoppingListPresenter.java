@@ -1,7 +1,10 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+
+import java.util.List;
 
 /**
  * Created by Mateusz Grabarski on 20.02.2018.
@@ -29,5 +32,21 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     @Override
     public void setCurrentUser(User user) {
         mShoppingList.setOwnerEmail(user.getEmail());
+    }
+
+    @Override
+    public void addNewShoppingItem(String name, float number) {
+        ShoppingItem item = ShoppingItem.getNewShoppingItem();
+        item.setNumber(number);
+        item.setName(name);
+
+        mShoppingList.getShoppingItems().add(item);
+
+        mView.updateList(mShoppingList.getShoppingItems());
+    }
+
+    @Override
+    public List<ShoppingItem> getShoppingList() {
+        return mShoppingList.getShoppingItems();
     }
 }

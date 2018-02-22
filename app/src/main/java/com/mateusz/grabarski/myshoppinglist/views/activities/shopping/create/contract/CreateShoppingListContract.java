@@ -1,6 +1,9 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+
+import java.util.List;
 
 /**
  * Created by Mateusz Grabarski on 20.02.2018.
@@ -15,6 +18,7 @@ public interface CreateShoppingListContract {
 
     interface View {
 
+        void updateList(List<ShoppingItem> shoppingItems);
     }
 
     interface Presenter {
@@ -22,5 +26,9 @@ public interface CreateShoppingListContract {
         void setListName(String listName);
 
         void setCurrentUser(User user);
+
+        void addNewShoppingItem(String name, float number);
+
+        List<ShoppingItem> getShoppingList();
     }
 }

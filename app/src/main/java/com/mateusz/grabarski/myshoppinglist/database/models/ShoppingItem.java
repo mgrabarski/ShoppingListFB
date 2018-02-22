@@ -7,16 +7,19 @@ package com.mateusz.grabarski.myshoppinglist.database.models;
 public class ShoppingItem {
 
     private long createDate;
-    private int number;
+    private float number;
     private boolean inCart;
+    private String name;
 
     public ShoppingItem() {
     }
 
-    public ShoppingItem(long createDate, int number, boolean inCart) {
-        this.createDate = createDate;
-        this.number = number;
-        this.inCart = inCart;
+    public static ShoppingItem getNewShoppingItem() {
+        ShoppingItem item = new ShoppingItem();
+        item.setCreateDate(System.currentTimeMillis());
+        item.setInCart(false);
+        item.setNumber(0);
+        return item;
     }
 
     public long getCreateDate() {
@@ -27,11 +30,11 @@ public class ShoppingItem {
         this.createDate = createDate;
     }
 
-    public int getNumber() {
+    public float getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(float number) {
         this.number = number;
     }
 
@@ -43,6 +46,18 @@ public class ShoppingItem {
         this.inCart = inCart;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDisplayValue() {
+        return name + " (" + number + ")";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,15 +66,17 @@ public class ShoppingItem {
         ShoppingItem that = (ShoppingItem) o;
 
         if (createDate != that.createDate) return false;
-        if (number != that.number) return false;
-        return inCart == that.inCart;
+        if (Float.compare(that.number, number) != 0) return false;
+        if (inCart != that.inCart) return false;
+        return name != null ? name.equals(that.name) : that.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (createDate ^ (createDate >>> 32));
-        result = 31 * result + number;
+        result = 31 * result + (number != +0.0f ? Float.floatToIntBits(number) : 0);
         result = 31 * result + (inCart ? 1 : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
@@ -69,6 +86,7 @@ public class ShoppingItem {
                 "createDate=" + createDate +
                 ", number=" + number +
                 ", inCart=" + inCart +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

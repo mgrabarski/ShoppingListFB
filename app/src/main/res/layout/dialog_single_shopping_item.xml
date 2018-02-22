@@ -8,9 +8,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/dialog_single_shopping_item_name_til"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/dialog_single_shopping_item_name_et"
@@ -21,7 +19,7 @@
             android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/item_name"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             tools:ignore="TextFields" />
     </android.support.design.widget.TextInputLayout>
 
@@ -32,9 +30,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/dialog_single_shopping_item_value_til"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/dialog_single_shopping_item_value_et"
@@ -45,7 +41,7 @@
             android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/item_value"
-            android:inputType="textEmailAddress"
+            android:inputType="numberDecimal"
             tools:ignore="TextFields" />
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>
