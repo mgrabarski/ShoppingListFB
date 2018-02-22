@@ -66,6 +66,26 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
     }
 
     @Override
+    public boolean canCloseActivity() {
+        if (mShoppingList.getShoppingItems().size() > 0) {
+            mView.displayDialogForSaveShoppingList();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void saveList() {
+        mModel.saveList(mShoppingList);
+    }
+
+    @Override
+    public void listSaved(ShoppingList list) {
+        mView.closeView();
+    }
+
+    @Override
     public void editItem(ShoppingItem item) {
         for (int i = 0; i < mShoppingList.getShoppingItems().size(); i++) {
             if (mShoppingList.getShoppingItems().get(i).getCreateDate() == item.getCreateDate()) {

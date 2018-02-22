@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
+import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.adapter.CreateShoppingListAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.adapter.CreateShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.contract.CreateShoppingListContract;
@@ -70,9 +72,8 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        // TODO: 20.02.2018 if user have items on list ask for save
+        if (mPresenter.canCloseActivity())
+            super.onBackPressed();
     }
 
     @Override
@@ -111,6 +112,30 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     @Override
     public void updateList(List<ShoppingItem> shoppingItems) {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void displayDialogForSaveShoppingList() {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.shopping_list_is_not_empty),
+                getString(R.string.yes),
+                getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.saveList();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void closeView() {
+        finish();
     }
 
     @Override

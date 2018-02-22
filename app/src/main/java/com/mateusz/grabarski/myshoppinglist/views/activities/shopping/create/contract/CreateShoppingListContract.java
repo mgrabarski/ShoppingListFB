@@ -3,6 +3,7 @@ package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.co
 import android.os.Bundle;
 
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 import java.util.List;
@@ -16,11 +17,17 @@ public interface CreateShoppingListContract {
     interface Model {
 
         void getCurrentUser();
+
+        void saveList(ShoppingList mShoppingList);
     }
 
     interface View {
 
         void updateList(List<ShoppingItem> shoppingItems);
+
+        void displayDialogForSaveShoppingList();
+
+        void closeView();
     }
 
     interface Presenter {
@@ -38,5 +45,11 @@ public interface CreateShoppingListContract {
         void removeShoppingItem(ShoppingItem item);
 
         void saveInBundleList(Bundle outState);
+
+        boolean canCloseActivity();
+
+        void saveList();
+
+        void listSaved(ShoppingList list);
     }
 }

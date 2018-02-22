@@ -45,4 +45,7 @@
     <string name="number_must_be_higher_then_zero">Number must be higher then zero</string>
     <string name="add_new_item">Add new item</string>
     <string name="update">Update</string>
+    <string name="shopping_list_is_not_empty">Shopping list is not empty. Would you like to save it?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
