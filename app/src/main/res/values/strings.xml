@@ -48,4 +48,5 @@
     <string name="shopping_list_is_not_empty">Shopping list is not empty. Would you like to save it?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="list_is_empty">Your shopping list is empty. Please add at least one item for save it.</string>
 </resources>

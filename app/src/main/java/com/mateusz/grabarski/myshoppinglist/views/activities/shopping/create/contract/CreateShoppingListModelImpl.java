@@ -49,7 +49,7 @@ public class CreateShoppingListModelImpl implements CreateShoppingListContract.M
 
             @Override
             public void onInsertError(ShoppingList list) {
-
+                mPresenter.listSaved(list);
             }
         });
     }

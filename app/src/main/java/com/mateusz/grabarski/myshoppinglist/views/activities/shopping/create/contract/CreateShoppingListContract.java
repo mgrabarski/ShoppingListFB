@@ -28,6 +28,8 @@ public interface CreateShoppingListContract {
         void displayDialogForSaveShoppingList();
 
         void closeView();
+
+        void displayDialogNoItemsOnList();
     }
 
     interface Presenter {

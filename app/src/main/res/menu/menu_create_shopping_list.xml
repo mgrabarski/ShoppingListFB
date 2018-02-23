@@ -7,4 +7,11 @@
         android:orderInCategory="100"
         android:title="@string/add"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_create_shopping_list_save"
+        android:icon="@drawable/ic_action_save"
+        android:orderInCategory="99"
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
 </menu>

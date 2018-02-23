@@ -90,6 +90,9 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
                 SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(),
                         SingleShoppingItemDialog.class.getSimpleName());
                 break;
+            case R.id.menu_create_shopping_list_save:
+                mPresenter.saveList();
+                break;
         }
 
         return true;
@@ -137,6 +140,14 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     @Override
     public void closeView() {
         finish();
+    }
+
+    @Override
+    public void displayDialogNoItemsOnList() {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.list_is_empty))
+                .show();
     }
 
     @Override

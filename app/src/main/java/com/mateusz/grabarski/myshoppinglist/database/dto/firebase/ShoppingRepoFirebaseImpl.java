@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.firebase;
 
+import com.google.firebase.database.DatabaseReference;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
@@ -19,6 +20,20 @@ public class ShoppingRepoFirebaseImpl implements ShoppingListRepository {
 
     @Override
     public void insertShoppingList(ShoppingList list, InsertShoppingListListener listener) {
-        listener.onInsertSuccess(list); // TODO: 22.02.2018 save in database
+        DatabaseReference reference = mFirebaseDatabaseLocation
+                .getShoppingListDatabaseReference(list.getOwnerEmail())
+                .push();
+
+        list.setId(reference.getKey());
+
+        mFirebaseDatabaseLocation
+                .getShoppingListDatabaseReference(list.getOwnerEmail())
+                .child(reference.getKey())
+                .setValue(list);
+
+        if (list.getId() != null)
+            listener.onInsertSuccess(list);
+        else
+            listener.onInsertError(list);
     }
 }
