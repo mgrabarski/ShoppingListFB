@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardPresenter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
@@ -199,5 +200,20 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     public void setUserShoppingList() {
 
+    }
+
+    @Override
+    public void onListSelected(ShoppingList list) {
+
+    }
+
+    @Override
+    public void onEditListClick(ShoppingList list) {
+
+    }
+
+    @Override
+    public void onDeleteListClick(ShoppingList list) {
+        
     }
 }
