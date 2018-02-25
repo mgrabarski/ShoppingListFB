@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto;
 
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -9,4 +10,6 @@ import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 public interface ShoppingListRepository {
     void insertShoppingList(ShoppingList list, InsertShoppingListListener listener);
+
+    void getDatabaseReference(String owner, SLDatabaseReferenceListener listener);
 }

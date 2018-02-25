@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -35,5 +36,11 @@ public class ShoppingRepoFirebaseImpl implements ShoppingListRepository {
             listener.onInsertSuccess(list);
         else
             listener.onInsertError(list);
+    }
+
+    @Override
+    public void getDatabaseReference(String owner, SLDatabaseReferenceListener listener) {
+        DatabaseReference reference = mFirebaseDatabaseLocation.getShoppingListDatabaseReference(owner);
+        listener.onShoppingListDatabaseReference(reference);
     }
 }

@@ -2,6 +2,7 @@ package com.mateusz.grabarski.myshoppinglist.database.dto.memory;
 
 import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -15,6 +16,11 @@ public class ShoppingRepoMemoryImpl implements ShoppingListRepository {
 
     @Override
     public void insertShoppingList(ShoppingList list, InsertShoppingListListener listener) {
+
+    }
+
+    @Override
+    public void getDatabaseReference(String owner, SLDatabaseReferenceListener listener) {
 
     }
 }

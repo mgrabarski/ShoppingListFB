@@ -69,12 +69,28 @@ public class ShoppingListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.loadUserShoppingLists();
+    }
+
     @OnClick(R.id.fragment_shopping_list_fab)
     public void onAddShoppingListClick() {
         mListener.onAddNewShoppingListClick();
     }
 
+    public void updateList(List<ShoppingList> lists) {
+        if (mLists != null && mAdapter != null) {
+            mLists.clear();
+            mLists.addAll(lists);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     public interface ShoppingListFragmentListener extends ShoppingListClickListener {
         void onAddNewShoppingListClick();
+
+        void loadUserShoppingLists();
     }
 }

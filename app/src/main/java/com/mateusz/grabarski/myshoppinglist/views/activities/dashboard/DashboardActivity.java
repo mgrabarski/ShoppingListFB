@@ -29,6 +29,8 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfile
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.CreateShoppingListActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -181,6 +183,11 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void loadUserShoppingLists() {
+        mPresenter.loadUserShoppingLists();
+    }
+
+    @Override
     public void onShoppingListNameTyped(String shoppingListName) {
         Intent intent = new Intent(this, CreateShoppingListActivity.class);
         intent.putExtra(CreateShoppingListActivity.KEY_SHOPPING_LIST_NAME, shoppingListName);
@@ -198,8 +205,10 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void setUserShoppingList() {
-
+    public void setUserShoppingList(List<ShoppingList> lists) {
+        ShoppingListFragment fragment = (ShoppingListFragment) getSupportFragmentManager().findFragmentByTag(ShoppingListFragment.class.getName());
+        if (fragment != null && fragment.isVisible())
+            fragment.updateList(lists);
     }
 
     @Override
@@ -214,6 +223,6 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onDeleteListClick(ShoppingList list) {
-        
+
     }
 }
