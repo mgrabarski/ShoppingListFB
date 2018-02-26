@@ -20,6 +20,7 @@ import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardPresenter;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.DeleteShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
@@ -37,7 +38,8 @@ import butterknife.ButterKnife;
 public class DashboardActivity extends AppCompatActivity implements
         DashboardContract.View,
         ShoppingListFragment.ShoppingListFragmentListener,
-        GetShoppingListDialog.GetShoppingListDialogInterface {
+        GetShoppingListDialog.GetShoppingListDialogInterface,
+        DeleteShoppingListDialog.DeleteShoppingListDialogInterface {
 
     @BindView(R.id.activity_dashboard_toolbar)
     Toolbar toolbar;
@@ -223,6 +225,12 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onDeleteListClick(ShoppingList list) {
+        DeleteShoppingListDialog.newInstance(list).show(getSupportFragmentManager(),
+                DeleteShoppingListDialog.class.getSimpleName());
+    }
 
+    @Override
+    public void onDeleteList(ShoppingList list) {
+        mPresenter.deleteShoppingList(list);
     }
 }

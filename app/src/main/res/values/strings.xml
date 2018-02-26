@@ -49,4 +49,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="list_is_empty">Your shopping list is empty. Please add at least one item for save it.</string>
+    <string name="delete_list">Delete list</string>
+    <string name="are_you_sure_you_want_to_delete_the_list">Are you sure you want to delete the list</string>
 </resources>

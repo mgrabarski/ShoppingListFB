@@ -1,8 +1,13 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.firebase;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.DeleteShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
@@ -42,5 +47,16 @@ public class ShoppingRepoFirebaseImpl implements ShoppingListRepository {
     public void getDatabaseReference(String owner, SLDatabaseReferenceListener listener) {
         DatabaseReference reference = mFirebaseDatabaseLocation.getShoppingListDatabaseReference(owner);
         listener.onShoppingListDatabaseReference(reference);
+    }
+
+    @Override
+    public void deleteShoppingList(final ShoppingList list, final DeleteShoppingListListener listener) {
+        DatabaseReference reference = mFirebaseDatabaseLocation.getShoppingListDatabaseReference(list.getOwnerEmail());
+        reference.child(list.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onDeleteSuccess(task.isSuccessful(), list);
+            }
+        });
     }
 }

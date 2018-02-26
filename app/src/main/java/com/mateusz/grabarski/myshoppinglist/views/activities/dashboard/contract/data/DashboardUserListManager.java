@@ -75,7 +75,7 @@ public class DashboardUserListManager {
 
         for (int i = 0; i < mList.size(); i++) {
             if (mList.get(i).getId().equals(list.getId())) {
-                mList.set(i, list);
+                mList.remove(i);
                 break;
             }
         }
@@ -87,7 +87,7 @@ public class DashboardUserListManager {
 
         for (int i = 0; i < mList.size(); i++) {
             if (mList.get(i).getId().equals(list.getId())) {
-                mList.remove(i);
+                mList.set(i, list);
                 break;
             }
         }

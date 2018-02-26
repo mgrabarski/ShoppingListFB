@@ -15,6 +15,8 @@ public interface DashboardContract {
         void getUserData();
 
         void getUserShoppingLists();
+
+        void deleteShoppingList(ShoppingList list);
     }
 
     interface View {
@@ -33,5 +35,7 @@ public interface DashboardContract {
         void loadUserShoppingLists();
 
         void displayUserLists(List<ShoppingList> lists);
+
+        void deleteShoppingList(ShoppingList list);
     }
 }

@@ -5,6 +5,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.ShoppingRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.DeleteShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.data.DashboardUserListManager;
@@ -65,6 +66,19 @@ public class DashboardModelImpl implements
         mDisplayLists = true;
 
         mPresenter.displayUserLists(mUserLists);
+    }
+
+    @Override
+    public void deleteShoppingList(ShoppingList list) {
+        mRepository.deleteShoppingList(list, new DeleteShoppingListListener() {
+            @Override
+            public void onDeleteSuccess(boolean success, ShoppingList list) {
+                if (!success)
+                    throw new RuntimeException("Something went wrong removing shopping list...");
+
+                // success remove is handle by DashboardUserListManager
+            }
+        });
     }
 
     @Override
