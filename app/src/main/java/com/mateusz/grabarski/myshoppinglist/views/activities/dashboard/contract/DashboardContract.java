@@ -17,6 +17,8 @@ public interface DashboardContract {
         void getUserShoppingLists();
 
         void deleteShoppingList(ShoppingList list);
+
+        void updateListName(ShoppingList list);
     }
 
     interface View {
@@ -37,5 +39,7 @@ public interface DashboardContract {
         void displayUserLists(List<ShoppingList> lists);
 
         void deleteShoppingList(ShoppingList list);
+
+        void updateListName(ShoppingList list);
     }
 }

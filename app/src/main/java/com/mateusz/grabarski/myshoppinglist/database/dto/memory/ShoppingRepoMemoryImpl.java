@@ -4,6 +4,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.DeleteShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateListNameListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -27,6 +28,11 @@ public class ShoppingRepoMemoryImpl implements ShoppingListRepository {
 
     @Override
     public void deleteShoppingList(ShoppingList list, DeleteShoppingListListener listener) {
+
+    }
+
+    @Override
+    public void updateListName(ShoppingList list, UpdateListNameListener listener) {
 
     }
 }

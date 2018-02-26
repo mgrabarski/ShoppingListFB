@@ -1,11 +1,14 @@
 package com.mateusz.grabarski.myshoppinglist.database.models;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by Mateusz Grabarski on 20.02.2018.
  */
-
+@IgnoreExtraProperties
 public class ShoppingItem implements Serializable {
 
     private long createDate;
@@ -56,6 +59,7 @@ public class ShoppingItem implements Serializable {
         this.name = name;
     }
 
+    @Exclude
     public String getDisplayValue() {
         return name + " (" + number + ")";
     }

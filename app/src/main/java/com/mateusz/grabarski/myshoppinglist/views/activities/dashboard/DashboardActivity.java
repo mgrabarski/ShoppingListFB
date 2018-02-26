@@ -21,6 +21,7 @@ import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardPresenter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.DeleteShoppingListDialog;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.EditNameShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
@@ -39,7 +40,8 @@ public class DashboardActivity extends AppCompatActivity implements
         DashboardContract.View,
         ShoppingListFragment.ShoppingListFragmentListener,
         GetShoppingListDialog.GetShoppingListDialogInterface,
-        DeleteShoppingListDialog.DeleteShoppingListDialogInterface {
+        DeleteShoppingListDialog.DeleteShoppingListDialogInterface,
+        EditNameShoppingListDialog.EditNameShoppingListDialogInterface {
 
     @BindView(R.id.activity_dashboard_toolbar)
     Toolbar toolbar;
@@ -220,7 +222,8 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onEditListClick(ShoppingList list) {
-
+        EditNameShoppingListDialog.newInstance(list).show(getSupportFragmentManager(),
+                EditNameShoppingListDialog.class.getSimpleName());
     }
 
     @Override
@@ -232,5 +235,10 @@ public class DashboardActivity extends AppCompatActivity implements
     @Override
     public void onDeleteList(ShoppingList list) {
         mPresenter.deleteShoppingList(list);
+    }
+
+    @Override
+    public void onEditShoppingList(ShoppingList list) {
+        mPresenter.updateListName(list);
     }
 }

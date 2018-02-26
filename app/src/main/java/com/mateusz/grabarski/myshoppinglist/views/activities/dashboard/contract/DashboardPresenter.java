@@ -44,4 +44,9 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     public void deleteShoppingList(ShoppingList list) {
         mModel.deleteShoppingList(list);
     }
+
+    @Override
+    public void updateListName(ShoppingList list) {
+        mModel.updateListName(list);
+    }
 }

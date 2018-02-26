@@ -6,6 +6,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.ShoppingRepoFi
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.DeleteShoppingListListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateListNameListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.data.DashboardUserListManager;
@@ -77,6 +78,19 @@ public class DashboardModelImpl implements
                     throw new RuntimeException("Something went wrong removing shopping list...");
 
                 // success remove is handle by DashboardUserListManager
+            }
+        });
+    }
+
+    @Override
+    public void updateListName(ShoppingList list) {
+        mRepository.updateListName(list, new UpdateListNameListener() {
+            @Override
+            public void onUpdate(boolean success, ShoppingList list) {
+                if (!success)
+                    throw new RuntimeException("Something went wrong with updating shopping list name...");
+
+                // success of update is handle by DashboardUserListManager
             }
         });
     }
