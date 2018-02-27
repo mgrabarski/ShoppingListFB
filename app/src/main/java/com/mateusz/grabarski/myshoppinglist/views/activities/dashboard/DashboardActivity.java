@@ -220,6 +220,8 @@ public class DashboardActivity extends AppCompatActivity implements
     public void onListSelected(ShoppingList list) {
         Intent intent = new Intent(this, CurrentShoppingActivity.class);
         intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_ID, list.getId());
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_NAME, list.getListName());
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_OWNER, list.getOwnerEmail());
         startActivity(intent);
     }
 
