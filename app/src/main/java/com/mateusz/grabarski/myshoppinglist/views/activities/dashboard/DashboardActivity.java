@@ -30,6 +30,7 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.CreateShoppingListActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.CurrentShoppingActivity;
 
 import java.util.List;
 
@@ -217,7 +218,9 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onListSelected(ShoppingList list) {
-
+        Intent intent = new Intent(this, CurrentShoppingActivity.class);
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_ID, list.getId());
+        startActivity(intent);
     }
 
     @Override
