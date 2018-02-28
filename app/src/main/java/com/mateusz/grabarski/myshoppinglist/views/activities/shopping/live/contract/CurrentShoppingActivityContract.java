@@ -33,5 +33,7 @@ public interface CurrentShoppingActivityContract {
         void updateList(List<ShoppingItem> items);
 
         void updateItem(ShoppingItem item);
+
+        void itemChange(ShoppingItem item);
     }
 }

@@ -106,7 +106,7 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onAddNewShoppingItem(ShoppingItem item, int flow) {
+    public void onShoppingItemChange(ShoppingItem item, int flow) {
         if (flow == SingleShoppingItemDialog.ADD_NEW)
             mPresenter.addNewShoppingItem(item);
         else if (flow == SingleShoppingItemDialog.EDIT_ITEM)

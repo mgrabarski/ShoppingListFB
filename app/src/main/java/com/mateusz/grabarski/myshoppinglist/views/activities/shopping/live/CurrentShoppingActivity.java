@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.dialogs.SingleShoppingItemDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapterListener;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.contract.CurrentShoppingActivityContract;
@@ -19,7 +20,8 @@ import butterknife.ButterKnife;
 
 public class CurrentShoppingActivity extends AppCompatActivity implements
         CurrentShoppingActivityContract.View,
-        CurrentListAdapterListener {
+        CurrentListAdapterListener,
+        SingleShoppingItemDialog.SingleShoppingItemDialogInterface {
 
     public static final String KEY_SHOPPING_LIST_ID = "SHOPPING_LIST_ID";
     public static final String KEY_SHOPPING_LIST_NAME = "SHOPPING_LIST_NAME";
@@ -94,7 +96,9 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
 
     @Override
     public void onItemEditClick(ShoppingItem item, int position) {
-
+        SingleShoppingItemDialog
+                .newInstance(item)
+                .show(getSupportFragmentManager(), SingleShoppingItemDialog.class.getSimpleName());
     }
 
     @Override
@@ -105,5 +109,11 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
     @Override
     public void updateList() {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onShoppingItemChange(ShoppingItem item, int flow) {
+        if (flow == SingleShoppingItemDialog.EDIT_ITEM)
+            mPresenter.itemChange(item);
     }
 }

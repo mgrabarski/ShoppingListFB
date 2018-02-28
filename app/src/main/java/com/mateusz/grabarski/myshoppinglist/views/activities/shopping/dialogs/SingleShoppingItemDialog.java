@@ -165,11 +165,11 @@ public class SingleShoppingItemDialog extends DialogFragment {
         item.setNumber(number);
         item.setName(mItemNameEt.getText().toString());
 
-        mListener.onAddNewShoppingItem(item, flow);
+        mListener.onShoppingItemChange(item, flow);
         return true;
     }
 
     public interface SingleShoppingItemDialogInterface {
-        void onAddNewShoppingItem(ShoppingItem item, int flow);
+        void onShoppingItemChange(ShoppingItem item, int flow);
     }
 }

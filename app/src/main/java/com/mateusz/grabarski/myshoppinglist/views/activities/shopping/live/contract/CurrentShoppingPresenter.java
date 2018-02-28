@@ -37,4 +37,9 @@ public class CurrentShoppingPresenter implements CurrentShoppingActivityContract
     public void updateItem(ShoppingItem item) {
         mModel.updateItemInDb(item);
     }
+
+    @Override
+    public void itemChange(ShoppingItem item) {
+        mModel.updateItemInDb(item);
+    }
 }
