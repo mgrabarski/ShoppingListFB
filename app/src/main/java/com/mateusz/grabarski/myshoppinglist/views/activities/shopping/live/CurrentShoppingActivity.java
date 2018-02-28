@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
+import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.dialogs.SingleShoppingItemDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapterListener;
@@ -102,8 +104,25 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemDeleteClick(ShoppingItem item, int position) {
-
+    public void onItemDeleteClick(final ShoppingItem item, int position) {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.are_you_sure_to_delete_this_item),
+                getString(R.string.yes),
+                getString(R.string.no),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.deleteItem(item);
+                    }
+                },
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
