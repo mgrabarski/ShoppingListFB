@@ -15,6 +15,8 @@ public interface CurrentShoppingActivityContract {
         List<ShoppingItem> getItems();
 
         void setShoppingListId(String shoppingListId);
+
+        void updateItemInDb(ShoppingItem item);
     }
 
     interface View {
@@ -29,5 +31,7 @@ public interface CurrentShoppingActivityContract {
         List<ShoppingItem> getShoppingItems();
 
         void updateList(List<ShoppingItem> items);
+
+        void updateItem(ShoppingItem item);
     }
 }

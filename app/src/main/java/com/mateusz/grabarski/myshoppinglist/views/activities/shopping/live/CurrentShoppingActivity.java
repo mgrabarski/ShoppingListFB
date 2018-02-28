@@ -89,7 +89,7 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
 
     @Override
     public void onItemCheck(ShoppingItem item, int position) {
-
+        mPresenter.updateItem(item);
     }
 
     @Override

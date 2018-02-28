@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter.
             nameCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    item.setInCart(isChecked);
                     mListener.onItemCheck(item, position);
                 }
             });

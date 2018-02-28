@@ -21,6 +21,7 @@ public class CurrentListManager {
     private CurrentListListener mListener;
     private String mOwnerEmail;
     private List<ShoppingItem> mItems;
+    private String mShoppingListId;
 
     public CurrentListManager(String owner, ShoppingListRepository repository, CurrentListListener listener) {
         this.mOwnerEmail = owner;
@@ -30,6 +31,8 @@ public class CurrentListManager {
     }
 
     public void setShoppingListId(final String shoppingListId) {
+        this.mShoppingListId = shoppingListId;
+
         mRepository.getDatabaseReference(mOwnerEmail, new SLDatabaseReferenceListener() {
             @Override
             public void onShoppingListDatabaseReference(DatabaseReference reference) {
@@ -69,7 +72,7 @@ public class CurrentListManager {
     private void addItem(ShoppingItem item) {
 
         for (ShoppingItem i : mItems)
-            if (i.getCreateDate() == i.getCreateDate())
+            if (i.getCreateDate() == item.getCreateDate())
                 return;
 
         mItems.add(item);
@@ -103,5 +106,9 @@ public class CurrentListManager {
 
     private void notifyListener() {
         mListener.updateList(mItems);
+    }
+
+    public String getShoppingListId() {
+        return mShoppingListId;
     }
 }

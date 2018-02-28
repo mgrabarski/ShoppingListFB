@@ -11,6 +11,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateListNameListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -68,6 +69,21 @@ public class ShoppingRepoFirebaseImpl implements ShoppingListRepository {
                         .child(list.getId())
                         .child("listName");
         reference.setValue(list.getListName())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        listener.onUpdate(task.isSuccessful(), list);
+                    }
+                });
+    }
+
+    @Override
+    public void updateList(final ShoppingList list, final UpdateShoppingListListener listener) {
+        DatabaseReference reference = mFirebaseDatabaseLocation
+                .getShoppingListDatabaseReference(list.getOwnerEmail())
+                .child(list.getId());
+
+        reference.setValue(list)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

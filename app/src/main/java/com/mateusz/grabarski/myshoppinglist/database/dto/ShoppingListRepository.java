@@ -4,6 +4,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.InsertShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.SLDatabaseReferenceListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateListNameListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 
 /**
@@ -18,4 +19,6 @@ public interface ShoppingListRepository {
     void deleteShoppingList(ShoppingList list, DeleteShoppingListListener listener);
 
     void updateListName(ShoppingList list, UpdateListNameListener listener);
+
+    void updateList(ShoppingList list, UpdateShoppingListListener listener);
 }
