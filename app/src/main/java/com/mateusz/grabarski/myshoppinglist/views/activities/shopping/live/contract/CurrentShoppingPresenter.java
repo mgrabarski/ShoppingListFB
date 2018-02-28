@@ -47,4 +47,9 @@ public class CurrentShoppingPresenter implements CurrentShoppingActivityContract
     public void deleteItem(ShoppingItem item) {
         mModel.deleteItem(item);
     }
+
+    @Override
+    public void addNewItem(ShoppingItem item) {
+        mModel.addItem(item);
+    }
 }

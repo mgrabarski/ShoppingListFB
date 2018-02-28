@@ -123,6 +123,39 @@ public class CurrentShoppingModelImpl implements CurrentShoppingActivityContract
     }
 
     @Override
+    public void addItem(final ShoppingItem item) {
+        mRepository.getDatabaseReference(mOwnerEmail, new SLDatabaseReferenceListener() {
+            @Override
+            public void onShoppingListDatabaseReference(DatabaseReference reference) {
+                reference
+                        .child(mCurrentListManager.getShoppingListId())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                ShoppingList list = dataSnapshot.getValue(ShoppingList.class);
+
+                                if (list != null && list.getShoppingItems() != null)
+                                    list.getShoppingItems().add(item);
+
+                                mRepository.updateList(list, new UpdateShoppingListListener() {
+                                    @Override
+                                    public void onUpdate(boolean success, ShoppingList list) {
+                                        // TODO: 28.02.2018 if !success
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+            }
+        });
+    }
+
+    @Override
     public void updateList(List<ShoppingItem> items) {
         mItems.clear();
         mItems.addAll(items);

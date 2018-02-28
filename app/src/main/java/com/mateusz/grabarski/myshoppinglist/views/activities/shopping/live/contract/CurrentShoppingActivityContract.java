@@ -19,6 +19,8 @@ public interface CurrentShoppingActivityContract {
         void updateItemInDb(ShoppingItem item);
 
         void deleteItem(ShoppingItem item);
+
+        void addItem(ShoppingItem item);
     }
 
     interface View {
@@ -39,5 +41,7 @@ public interface CurrentShoppingActivityContract {
         void itemChange(ShoppingItem item);
 
         void deleteItem(ShoppingItem item);
+
+        void addNewItem(ShoppingItem item);
     }
 }

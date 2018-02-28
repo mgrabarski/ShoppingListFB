@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
@@ -92,6 +94,25 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_current_shopping, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_current_shopping_add:
+                SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(),
+                        SingleShoppingItemDialog.class.getSimpleName());
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
     public void onItemCheck(ShoppingItem item, int position) {
         mPresenter.updateItem(item);
     }
@@ -134,5 +155,7 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
     public void onShoppingItemChange(ShoppingItem item, int flow) {
         if (flow == SingleShoppingItemDialog.EDIT_ITEM)
             mPresenter.itemChange(item);
+        else if (flow == SingleShoppingItemDialog.ADD_NEW)
+            mPresenter.addNewItem(item);
     }
 }
