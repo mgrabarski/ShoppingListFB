@@ -22,7 +22,13 @@ android {
     }
 
     productFlavors {
+        dev {
+            resValue 'string', 'app_name', 'MyShoppingList - dev'
+        }
 
+        live {
+            resValue 'string', 'app_name', 'MyShoppingList'
+        }
     }
 
     testOptions {
