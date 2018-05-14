@@ -17,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.DashboardPresenter;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.DeleteShoppingListDialog;
+import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.EditNameShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
@@ -27,6 +30,9 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.create.CreateShoppingListActivity;
+import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.CurrentShoppingActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +40,9 @@ import butterknife.ButterKnife;
 public class DashboardActivity extends AppCompatActivity implements
         DashboardContract.View,
         ShoppingListFragment.ShoppingListFragmentListener,
-        GetShoppingListDialog.GetShoppingListDialogInterface {
+        GetShoppingListDialog.GetShoppingListDialogInterface,
+        DeleteShoppingListDialog.DeleteShoppingListDialogInterface,
+        EditNameShoppingListDialog.EditNameShoppingListDialogInterface {
 
     @BindView(R.id.activity_dashboard_toolbar)
     Toolbar toolbar;
@@ -180,6 +188,11 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void loadUserShoppingLists() {
+        mPresenter.loadUserShoppingLists();
+    }
+
+    @Override
     public void onShoppingListNameTyped(String shoppingListName) {
         Intent intent = new Intent(this, CreateShoppingListActivity.class);
         intent.putExtra(CreateShoppingListActivity.KEY_SHOPPING_LIST_NAME, shoppingListName);
@@ -197,7 +210,40 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void setUserShoppingList() {
+    public void setUserShoppingList(List<ShoppingList> lists) {
+        ShoppingListFragment fragment = (ShoppingListFragment) getSupportFragmentManager().findFragmentByTag(ShoppingListFragment.class.getName());
+        if (fragment != null && fragment.isVisible())
+            fragment.updateList(lists);
+    }
 
+    @Override
+    public void onListSelected(ShoppingList list) {
+        Intent intent = new Intent(this, CurrentShoppingActivity.class);
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_ID, list.getId());
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_NAME, list.getListName());
+        intent.putExtra(CurrentShoppingActivity.KEY_SHOPPING_LIST_OWNER, list.getOwnerEmail());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEditListClick(ShoppingList list) {
+        EditNameShoppingListDialog.newInstance(list).show(getSupportFragmentManager(),
+                EditNameShoppingListDialog.class.getSimpleName());
+    }
+
+    @Override
+    public void onDeleteListClick(ShoppingList list) {
+        DeleteShoppingListDialog.newInstance(list).show(getSupportFragmentManager(),
+                DeleteShoppingListDialog.class.getSimpleName());
+    }
+
+    @Override
+    public void onDeleteList(ShoppingList list) {
+        mPresenter.deleteShoppingList(list);
+    }
+
+    @Override
+    public void onEditShoppingList(ShoppingList list) {
+        mPresenter.updateListName(list);
     }
 }

@@ -31,6 +31,7 @@
         <activity
             android:name=".views.activities.shopping.create.CreateShoppingListActivity"
             android:parentActivityName=".views.activities.dashboard.DashboardActivity" />
+        <activity android:name=".views.activities.shopping.live.CurrentShoppingActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">MyShoppingList</string>
     <string name="log_in">Log in</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
@@ -48,4 +47,10 @@
     <string name="shopping_list_is_not_empty">Shopping list is not empty. Would you like to save it?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="list_is_empty">Your shopping list is empty. Please add at least one item for save it.</string>
+    <string name="delete_list">Delete list</string>
+    <string name="are_you_sure_you_want_to_delete_the_list">Are you sure you want to delete the list</string>
+    <string name="edit_list_name">Edit list name</string>
+    <string name="are_you_sure_to_delete_this_item">Are you sure to delete this item?</string>
+    <string name="logout">Logout</string>
 </resources>

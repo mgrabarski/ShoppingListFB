@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
@@ -48,6 +51,13 @@ public class EditProfileActivity extends AppCompatActivity implements
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mPresenter = new EditProfilePresenterImpl(this);
     }
@@ -126,6 +136,16 @@ public class EditProfileActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.menu_edit_profile_save:
                 mPresenter.updateProfile(getUserProfileFromView());
+                break;
+            case R.id.menu_edit_profile_logout:
+                FirebaseAuth.getInstance().signOut();
+
+                finish();
+                Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
                 break;
         }
 

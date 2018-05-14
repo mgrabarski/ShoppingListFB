@@ -1,6 +1,9 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+
+import java.util.List;
 
 /**
  * Created by Mateusz Grabarski on 20.02.2018.
@@ -25,5 +28,25 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     public void refreshUserData(User user) {
         mView.setUserName(user.getName());
         mView.setUserEmail(user.getEmail());
+    }
+
+    @Override
+    public void loadUserShoppingLists() {
+        mModel.getUserShoppingLists();
+    }
+
+    @Override
+    public void displayUserLists(List<ShoppingList> lists) {
+        mView.setUserShoppingList(lists);
+    }
+
+    @Override
+    public void deleteShoppingList(ShoppingList list) {
+        mModel.deleteShoppingList(list);
+    }
+
+    @Override
+    public void updateListName(ShoppingList list) {
+        mModel.updateListName(list);
     }
 }

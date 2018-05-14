@@ -18,6 +18,9 @@ import android.widget.EditText;
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mateusz Grabarski on 21.02.2018.
  */
@@ -30,11 +33,20 @@ public class SingleShoppingItemDialog extends DialogFragment {
     private static final String KEY_FLOW = "FLOW";
     private static final String KEY_ITEM = "ITEM";
 
+    @BindView(R.id.dialog_single_shopping_item_name_et)
+    EditText mItemNameEt;
+
+    @BindView(R.id.dialog_single_shopping_item_name_til)
+    TextInputLayout mItemNameTil;
+
+    @BindView(R.id.dialog_single_shopping_item_value_et)
+    EditText mItemNumberEt;
+
+    @BindView(R.id.dialog_single_shopping_item_value_til)
+    TextInputLayout mItemNumberTil;
+
     private int flow;
     private ShoppingItem item;
-
-    private EditText mItemNameEt, mItemNumberEt;
-    private TextInputLayout mItemNameTil, mItemNumberTil;
 
     private SingleShoppingItemDialogInterface mListener;
 
@@ -110,10 +122,7 @@ public class SingleShoppingItemDialog extends DialogFragment {
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_single_shopping_item, null);
 
-        mItemNameEt = view.findViewById(R.id.dialog_single_shopping_item_name_et);
-        mItemNumberEt = view.findViewById(R.id.dialog_single_shopping_item_value_et);
-        mItemNameTil = view.findViewById(R.id.dialog_single_shopping_item_name_til);
-        mItemNumberTil = view.findViewById(R.id.dialog_single_shopping_item_value_til);
+        ButterKnife.bind(this, view);
 
         if (flow == EDIT_ITEM) {
             mItemNameEt.setText(item.getName());
@@ -156,11 +165,11 @@ public class SingleShoppingItemDialog extends DialogFragment {
         item.setNumber(number);
         item.setName(mItemNameEt.getText().toString());
 
-        mListener.onAddNewShoppingItem(item, flow);
+        mListener.onShoppingItemChange(item, flow);
         return true;
     }
 
     public interface SingleShoppingItemDialogInterface {
-        void onAddNewShoppingItem(ShoppingItem item, int flow);
+        void onShoppingItemChange(ShoppingItem item, int flow);
     }
 }

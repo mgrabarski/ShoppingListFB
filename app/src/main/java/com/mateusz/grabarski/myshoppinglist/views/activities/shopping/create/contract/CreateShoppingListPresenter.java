@@ -77,7 +77,10 @@ public class CreateShoppingListPresenter implements CreateShoppingListContract.P
 
     @Override
     public void saveList() {
-        mModel.saveList(mShoppingList);
+        if (mShoppingList.getShoppingItems().size() > 0)
+            mModel.saveList(mShoppingList);
+        else
+            mView.displayDialogNoItemsOnList();
     }
 
     @Override

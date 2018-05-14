@@ -87,7 +87,11 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
 
         switch (item.getItemId()) {
             case R.id.menu_create_shopping_list_add:
-                SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(), null);
+                SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(),
+                        SingleShoppingItemDialog.class.getSimpleName());
+                break;
+            case R.id.menu_create_shopping_list_save:
+                mPresenter.saveList();
                 break;
         }
 
@@ -102,7 +106,7 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onAddNewShoppingItem(ShoppingItem item, int flow) {
+    public void onShoppingItemChange(ShoppingItem item, int flow) {
         if (flow == SingleShoppingItemDialog.ADD_NEW)
             mPresenter.addNewShoppingItem(item);
         else if (flow == SingleShoppingItemDialog.EDIT_ITEM)
@@ -139,8 +143,17 @@ public class CreateShoppingListActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void displayDialogNoItemsOnList() {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.list_is_empty))
+                .show();
+    }
+
+    @Override
     public void onEditClick(ShoppingItem item) {
-        SingleShoppingItemDialog.newInstance(item).show(getSupportFragmentManager(), null);
+        SingleShoppingItemDialog.newInstance(item).show(getSupportFragmentManager(),
+                SingleShoppingItemDialog.class.getSimpleName());
     }
 
     @Override
