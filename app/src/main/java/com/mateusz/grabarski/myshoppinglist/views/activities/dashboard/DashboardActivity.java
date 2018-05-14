@@ -152,7 +152,31 @@ public class DashboardActivity extends AppCompatActivity implements
             finish();
         } else {
             super.onBackPressed();
+            Fragment currentFragment = getCurrentDisplayingFragment();
+            refreshMenu(currentFragment);
         }
+    }
+
+    private void refreshMenu(Fragment currentFragment) {
+        if (currentFragment instanceof ShoppingListFragment) {
+            selectDrawerItem(navigationView.getMenu().getItem(0));
+        } else if (currentFragment instanceof FriendsFragment) {
+            selectDrawerItem(navigationView.getMenu().getItem(1));
+        } else if (currentFragment instanceof SharedListsFragment) {
+            selectDrawerItem(navigationView.getMenu().getItem(2));
+        }
+    }
+
+    private Fragment getCurrentDisplayingFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isAdded())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
     private void replaceAndAddToBackStackFragment(Fragment fragment) {
