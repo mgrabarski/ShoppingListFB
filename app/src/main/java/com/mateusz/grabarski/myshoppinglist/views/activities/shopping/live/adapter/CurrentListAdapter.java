@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,8 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter.
 
         public void populate(final ShoppingItem item, final CurrentListAdapterListener listener, final int position) {
             nameCb.setChecked(item.isInCart());
+            decorateCheckItem(nameCb);
+
             nameCb.setText(item.getDisplayValue());
 
             nameCb.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +73,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter.
                 public void onClick(View v) {
                     CheckBox cb = ((CheckBox) v);
 
-                    if (cb.isChecked()) {
-                        editIv.setVisibility(View.GONE);
-                        deleteIv.setVisibility(View.GONE);
-                    } else {
-                        editIv.setVisibility(View.VISIBLE);
-                        deleteIv.setVisibility(View.VISIBLE);
-                    }
+                    decorateCheckItem(cb);
 
                     item.setInCart(cb.isChecked());
                     mListener.onItemCheck(item, position);
@@ -96,6 +93,20 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter.
                     listener.onItemDeleteClick(item, position);
                 }
             });
+        }
+
+        private void decorateCheckItem(CheckBox cb) {
+            if (cb.isChecked()) {
+                editIv.setVisibility(View.GONE);
+                deleteIv.setVisibility(View.GONE);
+                cb.setPaintFlags(cb.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                cb.setTextColor(cb.getResources().getColor(android.R.color.darker_gray));
+            } else {
+                editIv.setVisibility(View.VISIBLE);
+                deleteIv.setVisibility(View.VISIBLE);
+                cb.setPaintFlags(cb.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                cb.setTextColor(cb.getResources().getColor(android.R.color.black));
+            }
         }
     }
 }
