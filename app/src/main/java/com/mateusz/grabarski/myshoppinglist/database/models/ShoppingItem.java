@@ -15,6 +15,7 @@ public class ShoppingItem implements Serializable {
     private float number;
     private boolean inCart;
     private String name;
+    private String whoBuy;
 
     public ShoppingItem() {
     }
@@ -24,6 +25,7 @@ public class ShoppingItem implements Serializable {
         item.setCreateDate(System.currentTimeMillis());
         item.setInCart(false);
         item.setNumber(0);
+        item.setWhoBuy(null);
         return item;
     }
 
@@ -59,31 +61,17 @@ public class ShoppingItem implements Serializable {
         this.name = name;
     }
 
+    public String getWhoBuy() {
+        return whoBuy;
+    }
+
+    public void setWhoBuy(String whoBuy) {
+        this.whoBuy = whoBuy;
+    }
+
     @Exclude
     public String getDisplayValue() {
-        return name + " (" + number + ")";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ShoppingItem that = (ShoppingItem) o;
-
-        if (createDate != that.createDate) return false;
-        if (Float.compare(that.number, number) != 0) return false;
-        if (inCart != that.inCart) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (createDate ^ (createDate >>> 32));
-        result = 31 * result + (number != +0.0f ? Float.floatToIntBits(number) : 0);
-        result = 31 * result + (inCart ? 1 : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return name + " (" + (int) number + ")";
     }
 
     @Override
@@ -93,6 +81,7 @@ public class ShoppingItem implements Serializable {
                 ", number=" + number +
                 ", inCart=" + inCart +
                 ", name='" + name + '\'' +
+                ", whoBuy='" + whoBuy + '\'' +
                 '}';
     }
 }

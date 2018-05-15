@@ -69,6 +69,15 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter.
                 @Override
                 public void onClick(View v) {
                     CheckBox cb = ((CheckBox) v);
+
+                    if (cb.isChecked()) {
+                        editIv.setVisibility(View.GONE);
+                        deleteIv.setVisibility(View.GONE);
+                    } else {
+                        editIv.setVisibility(View.VISIBLE);
+                        deleteIv.setVisibility(View.VISIBLE);
+                    }
+
                     item.setInCart(cb.isChecked());
                     mListener.onItemCheck(item, position);
                 }
