@@ -53,4 +53,6 @@
     <string name="edit_list_name">Edit list name</string>
     <string name="are_you_sure_to_delete_this_item">Are you sure to delete this item?</string>
     <string name="logout">Logout</string>
+    <string name="friend">Friend</string>
+    <string name="request">Request</string>
 </resources>
