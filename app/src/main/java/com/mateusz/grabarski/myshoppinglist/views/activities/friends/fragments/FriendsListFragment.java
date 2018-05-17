@@ -1,4 +1,4 @@
-package com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.friends;
+package com.mateusz.grabarski.myshoppinglist.views.activities.friends.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
