@@ -55,4 +55,7 @@
     <string name="logout">Logout</string>
     <string name="friends">Friends</string>
     <string name="requests">Requests</string>
+    <string name="add_friend">Add fiend</string>
+    <string name="find_friend">Find friend</string>
+    <string name="search">Search</string>
 </resources>

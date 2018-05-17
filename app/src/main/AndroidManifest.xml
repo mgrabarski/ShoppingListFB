@@ -36,6 +36,10 @@
             android:name=".views.activities.friends.FriendsActivity"
             android:label="@string/your_friends"
             android:parentActivityName=".views.activities.dashboard.DashboardActivity" />
+        <activity
+            android:name=".views.activities.friends.FindFriendActivity"
+            android:label="@string/find_friend"
+            android:parentActivityName=".views.activities.friends.FriendsActivity" />
     </application>
 
 </manifest>
