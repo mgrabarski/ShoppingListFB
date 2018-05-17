@@ -34,6 +34,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -45,17 +49,16 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
-
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-auth:15.1.0'
     implementation 'com.google.firebase:firebase-database:15.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:3.1.2'
-
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
     // Dependencies for local unit tests
-    testImplementation "junit:junit:4.12"
-    testImplementation "org.mockito:mockito-all:1.10.19"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
 }
 apply plugin: 'com.google.gms.google-services'

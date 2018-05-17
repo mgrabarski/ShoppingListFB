@@ -23,9 +23,9 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.DeleteShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.EditNameShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
-import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.ShoppingListFragment;
+import com.mateusz.grabarski.myshoppinglist.views.activities.friends.FriendsActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
@@ -115,11 +115,11 @@ public class DashboardActivity extends AppCompatActivity implements
             case R.id.dashboard_drawer_shopping_lists:
                 fragment = ShoppingListFragment.newInstance();
                 break;
-            case R.id.dashboard_drawer_your_friends:
-                fragment = FriendsFragment.newInstance();
-                break;
             case R.id.dashboard_drawer_shared_lists:
                 fragment = SharedListsFragment.newInstance();
+                break;
+            case R.id.dashboard_drawer_your_friends:
+                activity = new FriendsActivity();
                 break;
             case R.id.dashboard_drawer_edit_profile:
                 activity = new EditProfileActivity();
@@ -160,8 +160,6 @@ public class DashboardActivity extends AppCompatActivity implements
     private void refreshMenu(Fragment currentFragment) {
         if (currentFragment instanceof ShoppingListFragment) {
             selectDrawerItem(navigationView.getMenu().getItem(0));
-        } else if (currentFragment instanceof FriendsFragment) {
-            selectDrawerItem(navigationView.getMenu().getItem(1));
         } else if (currentFragment instanceof SharedListsFragment) {
             selectDrawerItem(navigationView.getMenu().getItem(2));
         }

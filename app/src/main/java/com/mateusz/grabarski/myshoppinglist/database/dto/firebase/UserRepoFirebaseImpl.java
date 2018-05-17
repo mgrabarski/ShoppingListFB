@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
@@ -23,6 +24,9 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPas
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MGrabarski on 30.12.2017.
@@ -207,5 +211,26 @@ public class UserRepoFirebaseImpl implements UserRepository {
                         }
                     });
         }
+    }
+
+    @Override
+    public void getAllUsers(AllUsersListener listener) {
+        List<User> users = new ArrayList<>();
+        mFirebaseDatabaseLocation.getUsersDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    users.add(user);
+                }
+
+                listener.onAllUsersReady(users);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
