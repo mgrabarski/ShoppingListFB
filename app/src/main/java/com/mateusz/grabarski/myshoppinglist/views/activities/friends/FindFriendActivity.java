@@ -54,9 +54,7 @@ public class FindFriendActivity extends AppCompatActivity implements
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-                Log.d(FindFriendActivity.class.getSimpleName(), "onQueryTextSubmit = " + query);
-
+                mPresenter.searchUsersByQuery(query);
                 return true;
             }
 

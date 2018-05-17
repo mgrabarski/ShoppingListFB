@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
@@ -146,5 +147,10 @@ public class UserRepoMemoryImpl implements UserRepository {
     @Override
     public void getCurrentLoginUser(CurrentLoginUserListener listener) {
         listener.onCurrentLoginUserLoaded(mUsers.get(0));
+    }
+
+    @Override
+    public void getAllUsers(AllUsersListener listener) {
+
     }
 }

@@ -20,7 +20,7 @@ public class FirebaseDatabaseLocation {
         return FirebaseDatabase.getInstance().getReference();
     }
 
-    private DatabaseReference getUsersDatabaseReference() {
+    public DatabaseReference getUsersDatabaseReference() {
         return getDatabaseReference().child(FIREBASE_USERS);
     }
 
