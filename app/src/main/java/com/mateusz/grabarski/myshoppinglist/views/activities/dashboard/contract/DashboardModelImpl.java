@@ -4,7 +4,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.ShoppingListRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.ShoppingRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.DeleteShoppingListListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.shopping.UpdateListNameListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingList;
@@ -45,9 +45,9 @@ public class DashboardModelImpl implements
 
     @Override
     public void getUserData() {
-        mUserRepository.getCurrentLoginUser(new CurrentLoginUserListener() {
+        mUserRepository.getCurrentLoginUser(new GetUserListener() {
             @Override
-            public void onCurrentLoginUserLoaded(User user) {
+            public void onUserLoaded(User user) {
                 mUserListManager = new DashboardUserListManager(user.getEmail(),
                         mRepository,
                         DashboardModelImpl.this);

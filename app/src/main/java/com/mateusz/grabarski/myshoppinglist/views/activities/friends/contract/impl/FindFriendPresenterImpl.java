@@ -1,7 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FindFriendContract;
@@ -30,5 +29,10 @@ public class FindFriendPresenterImpl implements FindFriendContract.Presenter {
     @Override
     public void onFilteredUsersReady(List<User> filteredUsers) {
         mView.refreshUserList(filteredUsers);
+    }
+
+    @Override
+    public void onUserSelectFromList(User user) {
+        mModel.sendFriendRequestToUser(user);
     }
 }

@@ -58,7 +58,7 @@ dependencies {
     // Dependencies for local unit tests
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-all:1.10.19'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
 }
 apply plugin: 'com.google.gms.google-services'

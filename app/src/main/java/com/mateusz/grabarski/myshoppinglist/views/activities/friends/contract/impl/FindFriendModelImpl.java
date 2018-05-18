@@ -1,15 +1,11 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.mateusz.grabarski.myshoppinglist.database.managers.FriendsManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FindFriendContract;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +18,13 @@ public class FindFriendModelImpl implements FindFriendContract.Model {
     private FindFriendContract.Presenter mPresenter;
     private List<User> mUsers;
     private UserManager mUserManager;
+    private FriendsManager mFriendsManager;
 
     public FindFriendModelImpl(FindFriendContract.Presenter presenter) {
         this.mPresenter = presenter;
         this.mUsers = new ArrayList<>();
         this.mUserManager = new UserManager();
+        this.mFriendsManager = new FriendsManager();
 
         mUserManager.getAllUsers(users -> mUsers.addAll(users));
     }
@@ -44,6 +42,22 @@ public class FindFriendModelImpl implements FindFriendContract.Model {
             }
 
             mPresenter.onFilteredUsersReady(filteredUsers);
+        });
+    }
+
+    @Override
+    public void sendFriendRequestToUser(User user) {
+        mFriendsManager.sendFriendRequestToUser(user, new SendFriendRequestListener() {
+
+            @Override
+            public void successRequestSend() {
+
+            }
+
+            @Override
+            public void failedRequestSend() {
+
+            }
         });
     }
 }

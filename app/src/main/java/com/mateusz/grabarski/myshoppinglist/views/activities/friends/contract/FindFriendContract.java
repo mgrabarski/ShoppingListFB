@@ -10,6 +10,8 @@ public interface FindFriendContract {
     interface Model {
 
         void findUsersWithQuery(String query);
+
+        void sendFriendRequestToUser(User user);
     }
 
     interface View {
@@ -22,5 +24,7 @@ public interface FindFriendContract {
         void searchUsersByQuery(String query);
 
         void onFilteredUsersReady(List<User> filteredUsers);
+
+        void onUserSelectFromList(User user);
     }
 }

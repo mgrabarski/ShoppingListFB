@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.item_friend_root_cv)
+        CardView rootCv;
+
         @BindView(R.id.item_friend_avatar_iv)
         ImageView avatarIv;
 
@@ -60,7 +64,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate(User user) {
+        public void populate(final User user) {
             nameTv.setText(user.getName());
 
             Picasso
@@ -80,6 +84,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                             avatarIv.setImageResource(R.drawable.ic_empty_avatar);
                         }
                     });
+
+            rootCv.setOnClickListener(view -> mListener.onUserSelected(user));
         }
     }
 }

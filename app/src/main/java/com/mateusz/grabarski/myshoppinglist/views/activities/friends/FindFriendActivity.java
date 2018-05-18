@@ -93,7 +93,7 @@ public class FindFriendActivity extends AppCompatActivity implements
 
     @Override
     public void onUserSelected(User user) {
-
+        mPresenter.onUserSelectFromList(user);
     }
 
     @Override
