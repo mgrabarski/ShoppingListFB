@@ -29,6 +29,6 @@ public class FindFriendPresenterImpl implements FindFriendContract.Presenter {
 
     @Override
     public void onFilteredUsersReady(List<User> filteredUsers) {
-        Log.d(FindFriendPresenterImpl.class.getSimpleName(), "onFilteredUsersReady: " + filteredUsers.size());
+        mView.refreshUserList(filteredUsers);
     }
 }

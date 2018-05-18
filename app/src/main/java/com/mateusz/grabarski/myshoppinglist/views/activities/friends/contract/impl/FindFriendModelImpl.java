@@ -1,5 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
@@ -32,25 +34,16 @@ public class FindFriendModelImpl implements FindFriendContract.Model {
     @Override
     public void findUsersWithQuery(String query) {
         List<User> filteredUsers = new ArrayList<>();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        mUserManager.getUserByEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-                new CurrentLoginUserListener() {
-                    @Override
-                    public void onCurrentLoginUserLoaded(User user) {
-                        for (User userFromDatabase : mUsers) {
-                            if (StringUtils.containsIgnoreCase(userFromDatabase.getName(), query) &&
-                                    !user.getEmail().equals(userFromDatabase.getEmail())) {
-                                filteredUsers.add(userFromDatabase);
-                            }
-                        }
+        mUserManager.getAllUsers(users -> {
+            for (User user : users) {
+                if (!user.getEmail().equals(email)) {
+                    filteredUsers.add(user);
+                }
+            }
 
-                        mPresenter.onFilteredUsersReady(filteredUsers);
-                    }
-
-                    @Override
-                    public void onErrorReceived(String message) {
-
-                    }
-                });
+            mPresenter.onFilteredUsersReady(filteredUsers);
+        });
     }
 }

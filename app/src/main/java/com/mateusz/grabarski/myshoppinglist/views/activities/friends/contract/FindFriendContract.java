@@ -14,6 +14,7 @@ public interface FindFriendContract {
 
     interface View {
 
+        void refreshUserList(List<User> filteredUsers);
     }
 
     interface Presenter {
