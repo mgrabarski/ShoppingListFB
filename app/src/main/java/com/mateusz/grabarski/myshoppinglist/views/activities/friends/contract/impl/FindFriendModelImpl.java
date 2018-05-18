@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class FindFriendModelImpl implements FindFriendContract.Model {
 
+    private static final String TAG = "FindFriendModelImpl";
+
     private FindFriendContract.Presenter mPresenter;
     private List<User> mUsers;
     private UserManager mUserManager;
@@ -51,12 +53,17 @@ public class FindFriendModelImpl implements FindFriendContract.Model {
 
             @Override
             public void successRequestSend() {
-
+                mPresenter.friendRequestSendSuccess();
             }
 
             @Override
-            public void failedRequestSend() {
+            public void requestWasSend() {
+                mPresenter.friendRequestWasAlreadySend();
+            }
 
+            @Override
+            public void failedRequestSend(String message) {
+                mPresenter.failedFriendRequestSend(message);
             }
         });
     }

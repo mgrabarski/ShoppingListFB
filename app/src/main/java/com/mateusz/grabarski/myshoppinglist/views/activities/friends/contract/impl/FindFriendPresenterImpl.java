@@ -35,4 +35,19 @@ public class FindFriendPresenterImpl implements FindFriendContract.Presenter {
     public void onUserSelectFromList(User user) {
         mModel.sendFriendRequestToUser(user);
     }
+
+    @Override
+    public void friendRequestSendSuccess() {
+        mView.friendRequestSendSuccess();
+    }
+
+    @Override
+    public void friendRequestWasAlreadySend() {
+        mView.friendRequestWasAlreadySend();
+    }
+
+    @Override
+    public void failedFriendRequestSend(String message) {
+        mView.failedFriendRequestSend(message);
+    }
 }

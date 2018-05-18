@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
+import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters.FriendAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters.listeners.FriendListListener;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FindFriendContract;
@@ -101,5 +102,28 @@ public class FindFriendActivity extends AppCompatActivity implements
         mUsers.clear();
         mUsers.addAll(filteredUsers);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void friendRequestSendSuccess() {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.friend_request_send_success))
+                .show();
+    }
+
+    @Override
+    public void friendRequestWasAlreadySend() {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information),
+                getString(R.string.friend_request_already_sent))
+                .show();
+    }
+
+    @Override
+    public void failedFriendRequestSend(String message) {
+        DialogsGenerator.getMessageDialog(this,
+                getString(R.string.information), message)
+                .show();
     }
 }

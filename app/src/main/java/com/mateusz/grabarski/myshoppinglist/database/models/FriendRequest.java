@@ -9,6 +9,7 @@ public class FriendRequest {
     private long timestampOfSendRequest;
     private long timestampOfDenyRequest;
     private long timestampOfAcceptRequest;
+    private String key;
 
     public FriendRequest() {
     }
@@ -45,6 +46,14 @@ public class FriendRequest {
         this.timestampOfAcceptRequest = timestampOfAcceptRequest;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public String toString() {
         return "FriendRequest{" +
@@ -52,6 +61,7 @@ public class FriendRequest {
                 ", timestampOfSendRequest=" + timestampOfSendRequest +
                 ", timestampOfDenyRequest=" + timestampOfDenyRequest +
                 ", timestampOfAcceptRequest=" + timestampOfAcceptRequest +
+                ", key='" + key + '\'' +
                 '}';
     }
 }

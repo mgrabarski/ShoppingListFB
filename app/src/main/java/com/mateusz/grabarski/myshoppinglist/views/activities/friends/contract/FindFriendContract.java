@@ -17,6 +17,12 @@ public interface FindFriendContract {
     interface View {
 
         void refreshUserList(List<User> filteredUsers);
+
+        void friendRequestSendSuccess();
+
+        void friendRequestWasAlreadySend();
+
+        void failedFriendRequestSend(String message);
     }
 
     interface Presenter {
@@ -26,5 +32,11 @@ public interface FindFriendContract {
         void onFilteredUsersReady(List<User> filteredUsers);
 
         void onUserSelectFromList(User user);
+
+        void friendRequestSendSuccess();
+
+        void friendRequestWasAlreadySend();
+
+        void failedFriendRequestSend(String message);
     }
 }
