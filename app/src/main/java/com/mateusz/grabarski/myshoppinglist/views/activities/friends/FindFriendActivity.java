@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -94,6 +97,11 @@ public class FindFriendActivity extends AppCompatActivity implements
 
     @Override
     public void onUserSelected(User user) {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         mPresenter.onUserSelectFromList(user);
     }
 
