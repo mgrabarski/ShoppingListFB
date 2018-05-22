@@ -76,6 +76,12 @@ public class RequestFriendListFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.loadCurrentLoginUserFriendRequests();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -83,5 +89,6 @@ public class RequestFriendListFragment extends Fragment {
 
     public interface RequestFriendListFragmentInterface extends FriendRequestListener {
 
+        void loadCurrentLoginUserFriendRequests();
     }
 }

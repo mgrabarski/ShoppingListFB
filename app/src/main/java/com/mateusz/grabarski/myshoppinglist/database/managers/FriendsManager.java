@@ -4,7 +4,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.dto.FriendsRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.FriendsRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFromFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
+import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
 public class FriendsManager {
@@ -30,5 +33,23 @@ public class FriendsManager {
 
                     }
                 });
+    }
+
+    public void getAllUserFriendRequests(User user, GetUserFriendRequestsListener listener) {
+        mFriendsRepository.getUserFriendRequests(user, listener);
+    }
+
+    public void getUserFromFriendRequest(FriendRequest request, GetUserFromFriendRequestListener listener) {
+        mUserManager.getUserByEmail(request.getEmailWho(), new GetUserListener() {
+            @Override
+            public void onUserLoaded(User user) {
+                listener.onUser(request, user);
+            }
+
+            @Override
+            public void onErrorReceived(String message) {
+
+            }
+        });
     }
 }
