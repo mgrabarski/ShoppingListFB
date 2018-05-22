@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.adapters.FriendsViewPagerAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.fragments.FriendsListFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.fragments.RequestFriendListFragment;
@@ -20,7 +21,8 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.friends.fragments.R
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FriendsActivity extends AppCompatActivity {
+public class FriendsActivity extends AppCompatActivity implements
+        RequestFriendListFragment.RequestFriendListFragmentInterface {
 
     @BindView(R.id.activity_friend_toolbar)
     Toolbar toolbar;
@@ -67,5 +69,15 @@ public class FriendsActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onAccept(FriendRequest friendRequest) {
+
+    }
+
+    @Override
+    public void onRefused(FriendRequest friendRequest) {
+
     }
 }
