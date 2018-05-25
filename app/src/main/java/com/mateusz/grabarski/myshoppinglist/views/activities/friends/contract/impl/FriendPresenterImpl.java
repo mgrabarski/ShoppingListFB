@@ -27,4 +27,14 @@ public class FriendPresenterImpl implements FriendContract.Presenter {
     public void readyUserFriendRequests(List<FriendRequestUI> friendRequests) {
         mView.displayFriendRequests(friendRequests);
     }
+
+    @Override
+    public void acceptedRequest(FriendRequestUI friendRequest) {
+        mModel.addFriend(friendRequest);
+    }
+
+    @Override
+    public void refusedRequest(FriendRequestUI friendRequest) {
+        mModel.friendRequestRefused(friendRequest);
+    }
 }

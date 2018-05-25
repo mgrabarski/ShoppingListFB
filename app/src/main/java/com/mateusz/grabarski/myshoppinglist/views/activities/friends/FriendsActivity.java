@@ -82,12 +82,12 @@ public class FriendsActivity extends AppCompatActivity implements
 
     @Override
     public void onAccept(FriendRequestUI friendRequest) {
-
+        mPresenter.acceptedRequest(friendRequest);
     }
 
     @Override
     public void onRefused(FriendRequestUI friendRequest) {
-
+        mPresenter.refusedRequest(friendRequest);
     }
 
     @Override

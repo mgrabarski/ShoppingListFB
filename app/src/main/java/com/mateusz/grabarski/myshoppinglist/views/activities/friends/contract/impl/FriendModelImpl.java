@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.FriendsManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -121,5 +122,24 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
                 mPresenter.readyUserFriendRequests(mFriendRequestUI);
             });
         }
+    }
+
+    @Override
+    public void addFriend(FriendRequestUI friendRequest) {
+
+        FriendRequest request = friendRequest.getFriendRequest();
+        request.setTimestampOfAcceptRequest(System.currentTimeMillis());
+
+        mFriendsManager.requestAccepted(request, new FriendAddedListener() {
+            @Override
+            public void onFriendAdded() {
+
+            }
+        });
+    }
+
+    @Override
+    public void friendRequestRefused(FriendRequestUI friendRequest) {
+        
     }
 }

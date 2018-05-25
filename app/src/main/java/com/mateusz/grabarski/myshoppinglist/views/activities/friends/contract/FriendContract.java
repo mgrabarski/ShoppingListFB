@@ -12,6 +12,10 @@ public interface FriendContract {
     interface Model {
 
         void loadCurrentLoginUserFriendRequests();
+
+        void addFriend(FriendRequestUI friendRequest);
+
+        void friendRequestRefused(FriendRequestUI friendRequest);
     }
 
     interface View {
@@ -24,5 +28,9 @@ public interface FriendContract {
         void loadCurrentLoginUserFriendRequests();
 
         void readyUserFriendRequests(List<FriendRequestUI> friendRequests);
+
+        void acceptedRequest(FriendRequestUI friendRequest);
+
+        void refusedRequest(FriendRequestUI friendRequest);
     }
 }
