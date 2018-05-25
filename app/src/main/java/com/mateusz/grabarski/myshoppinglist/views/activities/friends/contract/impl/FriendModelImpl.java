@@ -103,24 +103,33 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
     }
 
     private void updateUserFriendRequests() {
+
+        mFriendRequestUI.clear();
+
         for (FriendRequest request : mFriendRequests) {
-            mFriendsManager.getUserFromFriendRequest(request, (friendRequest, user) -> {
 
-                // is is then change and update ui
-                for (int i = 0; i < mFriendRequestUI.size(); i++) {
-                    FriendRequestUI checkingRequest = mFriendRequestUI.get(i);
+            if (request.getTimestampOfAcceptRequest() == 0 && request.getTimestampOfDenyRequest() == 0) {
 
-                    if (checkingRequest.getFriendRequest().getKey().equals(friendRequest.getKey())) {
-                        mFriendRequestUI.set(i, new FriendRequestUI(request, user));
-                        mPresenter.readyUserFriendRequests(mFriendRequestUI);
-                        return;
+                mFriendsManager.getUserFromFriendRequest(request, (friendRequest, user) -> {
+
+                    // is is then change and update ui
+                    for (int i = 0; i < mFriendRequestUI.size(); i++) {
+                        FriendRequestUI checkingRequest = mFriendRequestUI.get(i);
+
+                        if (checkingRequest.getFriendRequest().getKey().equals(friendRequest.getKey())) {
+                            mFriendRequestUI.set(i, new FriendRequestUI(request, user));
+                            mPresenter.readyUserFriendRequests(mFriendRequestUI);
+                            return;
+                        }
                     }
-                }
 
-                // if there was no ui request then add new and notify ui
-                mFriendRequestUI.add(new FriendRequestUI(friendRequest, user));
+                    // if there was no ui request then add new and notify ui
+                    mFriendRequestUI.add(new FriendRequestUI(friendRequest, user));
+                    mPresenter.readyUserFriendRequests(mFriendRequestUI);
+                });
+            } else {
                 mPresenter.readyUserFriendRequests(mFriendRequestUI);
-            });
+            }
         }
     }
 

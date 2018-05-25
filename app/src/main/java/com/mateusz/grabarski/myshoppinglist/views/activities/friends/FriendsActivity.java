@@ -97,7 +97,12 @@ public class FriendsActivity extends AppCompatActivity implements
 
     @Override
     public void displayFriendRequests(List<FriendRequestUI> friendRequests) {
-        ((RequestFriendListFragment) mViewPagerAdapter.getFragment(RequestFriendListFragment.class))
-                .updateFriendRequests(friendRequests);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((RequestFriendListFragment) mViewPagerAdapter.getFragment(RequestFriendListFragment.class))
+                        .updateFriendRequests(friendRequests);
+            }
+        });
     }
 }
