@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mateusz.grabarski.myshoppinglist.R;
-import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters.WaitingRequestsAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters.listeners.FriendRequestListener;
+import com.mateusz.grabarski.myshoppinglist.views.activities.friends.models.FriendRequestUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class RequestFriendListFragment extends Fragment {
     RecyclerView friendRv;
 
     private WaitingRequestsAdapter mAdapter;
-    private List<FriendRequest> requests;
+    private List<FriendRequestUI> requests;
     private RequestFriendListFragmentInterface mListener;
 
     Unbinder unbinder;
@@ -85,6 +85,12 @@ public class RequestFriendListFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void updateFriendRequests(List<FriendRequestUI> friendRequests) {
+        requests.clear();
+        requests.addAll(friendRequests);
+        mAdapter.notifyDataSetChanged();
     }
 
     public interface RequestFriendListFragmentInterface extends FriendRequestListener {

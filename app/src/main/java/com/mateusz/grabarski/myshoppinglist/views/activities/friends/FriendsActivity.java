@@ -6,12 +6,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
-import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.adapters.FriendsViewPagerAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FriendContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl.FriendPresenterImpl;
@@ -40,6 +38,7 @@ public class FriendsActivity extends AppCompatActivity implements
     ViewPager pager;
 
     private FriendContract.Presenter mPresenter;
+    private FriendsViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +51,12 @@ public class FriendsActivity extends AppCompatActivity implements
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        FriendsViewPagerAdapter adapter = new FriendsViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter = new FriendsViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(FriendsListFragment.newInstance(), getString(R.string.friends));
-        adapter.addFragment(RequestFriendListFragment.newInstance(), getString(R.string.requests));
+        mViewPagerAdapter.addFragment(FriendsListFragment.newInstance(), getString(R.string.friends));
+        mViewPagerAdapter.addFragment(RequestFriendListFragment.newInstance(), getString(R.string.requests));
 
-        pager.setAdapter(adapter);
+        pager.setAdapter(mViewPagerAdapter);
 
         tabs.setupWithViewPager(pager);
 
@@ -82,12 +81,12 @@ public class FriendsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onAccept(FriendRequest friendRequest) {
+    public void onAccept(FriendRequestUI friendRequest) {
 
     }
 
     @Override
-    public void onRefused(FriendRequest friendRequest) {
+    public void onRefused(FriendRequestUI friendRequest) {
 
     }
 
@@ -98,6 +97,7 @@ public class FriendsActivity extends AppCompatActivity implements
 
     @Override
     public void displayFriendRequests(List<FriendRequestUI> friendRequests) {
-        Log.d(TAG, "displayFriendRequests: " + friendRequests.size());
+        ((RequestFriendListFragment) mViewPagerAdapter.getFragment(RequestFriendListFragment.class))
+                .updateFriendRequests(friendRequests);
     }
 }

@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mateusz.grabarski.myshoppinglist.R;
-import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.adapters.listeners.FriendRequestListener;
+import com.mateusz.grabarski.myshoppinglist.views.activities.friends.models.FriendRequestUI;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,10 +24,10 @@ import butterknife.ButterKnife;
  */
 public class WaitingRequestsAdapter extends RecyclerView.Adapter<WaitingRequestsAdapter.ViewHolder> {
 
-    private List<FriendRequest> mRequests;
+    private List<FriendRequestUI> mRequests;
     private FriendRequestListener mListener;
 
-    public WaitingRequestsAdapter(List<FriendRequest> requests, FriendRequestListener listener) {
+    public WaitingRequestsAdapter(List<FriendRequestUI> requests, FriendRequestListener listener) {
         this.mRequests = requests;
         this.mListener = listener;
     }
@@ -68,9 +70,30 @@ public class WaitingRequestsAdapter extends RecyclerView.Adapter<WaitingRequests
             ButterKnife.bind(this, itemView);
         }
 
-        public void populate(FriendRequest friendRequest) {
+        public void populate(FriendRequestUI friendRequest) {
 
-            // TODO: 22.05.2018
+            if (friendRequest.getUser().getPictureUrl() != null) {
+                Picasso
+                        .with(rootCv.getContext())
+                        .load(friendRequest.getUser().getPictureUrl())
+                        .fit()
+                        .centerCrop()
+                        .into(avatarIv, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+                                avatarIv.setImageResource(R.drawable.ic_empty_avatar);
+                            }
+                        });
+            } else {
+                avatarIv.setImageResource(R.drawable.ic_empty_avatar);
+            }
+
+            nameTv.setText(friendRequest.getUser().getName());
 
             acceptIv.setOnClickListener(v -> mListener.onAccept(friendRequest));
             refuseIv.setOnClickListener(v -> mListener.onRefused(friendRequest));
