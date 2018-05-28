@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,11 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.mateusz.grabarski.myshoppinglist.R;
 import com.mateusz.grabarski.myshoppinglist.database.models.ShoppingItem;
 import com.mateusz.grabarski.myshoppinglist.utils.DialogsGenerator;
+import com.mateusz.grabarski.myshoppinglist.views.activities.share.ShareActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.dialogs.SingleShoppingItemDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.shopping.live.adapter.CurrentListAdapterListener;
@@ -73,12 +74,7 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(listName);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         shoppingRv.setLayoutManager(new LinearLayoutManager(this));
 
@@ -106,6 +102,10 @@ public class CurrentShoppingActivity extends AppCompatActivity implements
             case R.id.menu_current_shopping_add:
                 SingleShoppingItemDialog.newInstance().show(getSupportFragmentManager(),
                         SingleShoppingItemDialog.class.getSimpleName());
+                break;
+            case R.id.menu_current_shopping_share:
+                Intent intent = new Intent(this, ShareActivity.class);
+                startActivity(intent);
                 break;
         }
 

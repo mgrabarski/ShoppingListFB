@@ -60,4 +60,5 @@
     <string name="search">Search</string>
     <string name="friend_request_send_success">Your friend request was sent success.</string>
     <string name="friend_request_already_sent">You already send request to this user.</string>
+    <string name="share">Share</string>
 </resources>

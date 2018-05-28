@@ -40,6 +40,7 @@
             android:name=".views.activities.friends.FindFriendActivity"
             android:label="@string/find_friend"
             android:parentActivityName=".views.activities.friends.FriendsActivity" />
+        <activity android:name=".views.activities.share.ShareActivity"></activity>
     </application>
 
 </manifest>
