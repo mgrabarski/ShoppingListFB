@@ -60,7 +60,15 @@ public class CurrentShoppingModelImpl implements CurrentShoppingActivityContract
 
                                 if (list != null && list.getShoppingItems() != null) {
                                     for (int i = 0; i < list.getShoppingItems().size(); i++) {
-                                        if (list.getShoppingItems().get(i).getCreateDate() == item.getCreateDate()) {
+
+                                        ShoppingItem itemFromDB = list.getShoppingItems().get(i);
+
+                                        if (itemFromDB.getCreateDate() == item.getCreateDate()) {
+                                            if (item.isInCart()) {
+                                                item.setWhoBuy(mOwnerEmail);
+                                            } else {
+                                                item.setWhoBuy(null);
+                                            }
                                             list.getShoppingItems().set(i, item);
                                             break;
                                         }

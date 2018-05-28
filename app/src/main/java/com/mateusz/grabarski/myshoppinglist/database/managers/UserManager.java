@@ -3,8 +3,9 @@ package com.mateusz.grabarski.myshoppinglist.database.managers;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
@@ -26,7 +27,7 @@ public class UserManager {
         mUserRepository.insertUser(user, listener);
     }
 
-    public void getUserByEmail(String email, CurrentLoginUserListener listener) {
+    public void getUserByEmail(String email, GetUserListener listener) {
         mUserRepository.getUserByEmail(email, listener);
     }
 
@@ -40,5 +41,9 @@ public class UserManager {
 
     public void loginByGoogle(GoogleSignInAccount account, LoginByGoogleListener listener) {
         mUserRepository.loginUserByGoogle(account, listener);
+    }
+
+    public void getAllUsers(AllUsersListener listener) {
+        mUserRepository.getAllUsers(listener);
     }
 }

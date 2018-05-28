@@ -3,6 +3,8 @@ package com.mateusz.grabarski.myshoppinglist.database.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.List;
+
 /**
  * Created by MGrabarski on 23.12.2017.
  */
@@ -14,6 +16,7 @@ public class User {
     private String password;
     private long createDate;
     private String pictureUrl;
+    private List<FriendRequest> friendRequests;
 
     public User() {
     }
@@ -68,29 +71,12 @@ public class User {
         this.pictureUrl = pictureUrl;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (createDate != user.createDate) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null)
-            return false;
-        return pictureUrl != null ? pictureUrl.equals(user.pictureUrl) : user.pictureUrl == null;
+    public List<FriendRequest> getFriendRequests() {
+        return friendRequests;
     }
 
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (int) (createDate ^ (createDate >>> 32));
-        result = 31 * result + (pictureUrl != null ? pictureUrl.hashCode() : 0);
-        return result;
+    public void setFriendRequests(List<FriendRequest> friendRequests) {
+        this.friendRequests = friendRequests;
     }
 
     @Override
@@ -100,6 +86,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", createDate=" + createDate +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", friendRequests=" + friendRequests +
                 '}';
     }
 }

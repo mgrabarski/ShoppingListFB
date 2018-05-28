@@ -23,9 +23,9 @@ import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.contract.
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.DeleteShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.EditNameShoppingListDialog;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.dialogs.GetShoppingListDialog;
-import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.FriendsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.SharedListsFragment;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.fragments.ShoppingListFragment;
+import com.mateusz.grabarski.myshoppinglist.views.activities.friends.FriendsActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.help.HelpActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.profile.EditProfileActivity;
 import com.mateusz.grabarski.myshoppinglist.views.activities.settings.SettingsActivity;
@@ -115,11 +115,11 @@ public class DashboardActivity extends AppCompatActivity implements
             case R.id.dashboard_drawer_shopping_lists:
                 fragment = ShoppingListFragment.newInstance();
                 break;
-            case R.id.dashboard_drawer_your_friends:
-                fragment = FriendsFragment.newInstance();
-                break;
             case R.id.dashboard_drawer_shared_lists:
                 fragment = SharedListsFragment.newInstance();
+                break;
+            case R.id.dashboard_drawer_your_friends:
+                activity = new FriendsActivity();
                 break;
             case R.id.dashboard_drawer_edit_profile:
                 activity = new EditProfileActivity();
@@ -152,7 +152,29 @@ public class DashboardActivity extends AppCompatActivity implements
             finish();
         } else {
             super.onBackPressed();
+            Fragment currentFragment = getCurrentDisplayingFragment();
+            refreshMenu(currentFragment);
         }
+    }
+
+    private void refreshMenu(Fragment currentFragment) {
+        if (currentFragment instanceof ShoppingListFragment) {
+            selectDrawerItem(navigationView.getMenu().getItem(0));
+        } else if (currentFragment instanceof SharedListsFragment) {
+            selectDrawerItem(navigationView.getMenu().getItem(2));
+        }
+    }
+
+    private Fragment getCurrentDisplayingFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isAdded())
+                    return fragment;
+            }
+        }
+        return null;
     }
 
     private void replaceAndAddToBackStackFragment(Fragment fragment) {

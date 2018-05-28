@@ -5,8 +5,9 @@ import android.os.Handler;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.mateusz.grabarski.myshoppinglist.base.Constants;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
@@ -69,13 +70,13 @@ public class UserRepoMemoryImpl implements UserRepository {
     }
 
     @Override
-    public void getUserByEmail(String email, CurrentLoginUserListener listener) {
+    public void getUserByEmail(String email, GetUserListener listener) {
         for (User user : mUsers)
             if (user.getEmail().equals(email)) {
-                listener.onCurrentLoginUserLoaded(user);
+                listener.onUserLoaded(user);
             }
 
-        listener.onCurrentLoginUserLoaded(null);
+        listener.onUserLoaded(null);
     }
 
     @Override
@@ -144,7 +145,12 @@ public class UserRepoMemoryImpl implements UserRepository {
     }
 
     @Override
-    public void getCurrentLoginUser(CurrentLoginUserListener listener) {
-        listener.onCurrentLoginUserLoaded(mUsers.get(0));
+    public void getCurrentLoginUser(GetUserListener listener) {
+        listener.onUserLoaded(mUsers.get(0));
+    }
+
+    @Override
+    public void getAllUsers(AllUsersListener listener) {
+
     }
 }
