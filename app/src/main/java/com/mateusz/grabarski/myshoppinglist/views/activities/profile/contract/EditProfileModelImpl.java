@@ -2,7 +2,7 @@ package com.mateusz.grabarski.myshoppinglist.views.activities.profile.contract;
 
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.UserRepoFirebaseImpl;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 
@@ -22,9 +22,9 @@ public class EditProfileModelImpl implements EditProfileContract.Model {
 
     @Override
     public void getCurrentLoginUser() {
-        mUserRepository.getCurrentLoginUser(new CurrentLoginUserListener() {
+        mUserRepository.getCurrentLoginUser(new GetUserListener() {
             @Override
-            public void onCurrentLoginUserLoaded(User user) {
+            public void onUserLoaded(User user) {
                 mPresenter.readyUserProfile(user);
             }
 

@@ -46,4 +46,13 @@ public class FriendsViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
+
+    public Fragment getFragment(Class fragmentClass) {
+        for (Fragment fragment : mFragmentList) {
+            if (fragment.getClass() == fragmentClass) {
+                return fragment;
+            }
+        }
+        return null;
+    }
 }

@@ -1,8 +1,9 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
@@ -19,7 +20,7 @@ public interface UserRepository {
 
     void updateUser(User user, UpdateUserListener listener);
 
-    void getUserByEmail(String email, CurrentLoginUserListener listener);
+    void getUserByEmail(String email, GetUserListener listener);
 
     void loginUser(String email, String password, LoginListener loginListener);
 
@@ -27,5 +28,7 @@ public interface UserRepository {
 
     void loginUserByGoogle(GoogleSignInAccount account, LoginByGoogleListener listener);
 
-    void getCurrentLoginUser(CurrentLoginUserListener listener);
+    void getCurrentLoginUser(GetUserListener listener);
+
+    void getAllUsers(AllUsersListener listener);
 }

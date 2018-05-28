@@ -7,6 +7,7 @@
             android:title="@string/shopping_lists" />
         <item
             android:id="@+id/dashboard_drawer_your_friends"
+            android:checkable="false"
             android:icon="@drawable/ic_friends_list"
             android:title="@string/your_friends" />
         <item

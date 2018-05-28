@@ -15,14 +15,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.UserRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.AllUsersListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CreateNewAccountListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.CurrentLoginUserListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginByGoogleListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.LoginListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.ResetPasswordListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.UpdateUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.utils.InputFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by MGrabarski on 30.12.2017.
@@ -48,14 +52,11 @@ public class UserRepoFirebaseImpl implements UserRepository {
 
                     mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
                             .setValue(user)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        listener.onCreateAccountSuccess(user);
-                                    } else {
-                                        listener.onCreateAccountFailed(task.getException().getMessage());
-                                    }
+                            .addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    listener.onCreateAccountSuccess(user);
+                                } else {
+                                    listener.onCreateAccountFailed(task1.getException().getMessage());
                                 }
                             });
 
@@ -68,60 +69,63 @@ public class UserRepoFirebaseImpl implements UserRepository {
     public void updateUser(User user, final UpdateUserListener listener) {
         mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
                 .setValue(user)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            listener.onUpdateSuccess();
-                        } else {
-                            listener.onUpdateFailed(task.getException().getMessage());
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onUpdateSuccess();
+                    } else {
+                        listener.onUpdateFailed(task.getException().getMessage());
                     }
                 });
     }
 
     @Override
-    public void getUserByEmail(String email, CurrentLoginUserListener listener) {
+    public void getUserByEmail(String email, GetUserListener listener) {
+        mFirebaseDatabaseLocation.getUserDatabaseReference(email)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        listener.onUserLoaded(user);
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        listener.onErrorReceived(databaseError.getMessage());
+                    }
+                });
     }
 
     @Override
     public void loginUser(final String email, String password, final LoginListener loginListener) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful())
-                            loginListener.onLoginFailed(task.getException().getMessage());
-                        else {
-                            mFirebaseDatabaseLocation.getUserDatabaseReference(email)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            User user = dataSnapshot.getValue(User.class);
-                                            loginListener.onLoginSuccess(user);
-                                        }
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful())
+                        loginListener.onLoginFailed(task.getException().getMessage());
+                    else {
+                        mFirebaseDatabaseLocation.getUserDatabaseReference(email)
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User user = dataSnapshot.getValue(User.class);
+                                        loginListener.onLoginSuccess(user);
+                                    }
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                        }
-                                    });
-                        }
+                                    }
+                                });
                     }
                 });
     }
 
     @Override
     public void sendResetPasswordEmail(String email, final ResetPasswordListener listener) {
-        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    listener.onSendSuccess();
-                } else {
-                    listener.onSendFailed(task.getException().getMessage());
-                }
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                listener.onSendSuccess();
+            } else {
+                listener.onSendFailed(task.getException().getMessage());
             }
         });
     }
@@ -130,62 +134,59 @@ public class UserRepoFirebaseImpl implements UserRepository {
     public void loginUserByGoogle(final GoogleSignInAccount account, final LoginByGoogleListener listener) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                            final User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), null, System.currentTimeMillis(), account.getPhotoUrl().getPath());
+                        final User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), null, System.currentTimeMillis(), account.getPhotoUrl().getPath());
 
-                            mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.getValue() == null) {
-                                                mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
-                                                        .setValue(user)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    listener.onLoginSuccess(user);
-                                                                } else {
-                                                                    listener.onLoginFailed(task.getException().getMessage());
-                                                                }
+                        mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() == null) {
+                                            mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
+                                                    .setValue(user)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                listener.onLoginSuccess(user);
+                                                            } else {
+                                                                listener.onLoginFailed(task.getException().getMessage());
                                                             }
-                                                        });
-                                            } else {
-                                                mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
-                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                User userFromDatabase = dataSnapshot.getValue(User.class);
-                                                                listener.onLoginSuccess(userFromDatabase);
-                                                            }
+                                                        }
+                                                    });
+                                        } else {
+                                            mFirebaseDatabaseLocation.getUserDatabaseReference(user.getEmail())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            User userFromDatabase = dataSnapshot.getValue(User.class);
+                                                            listener.onLoginSuccess(userFromDatabase);
+                                                        }
 
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-                                                                listener.onLoginFailed(databaseError.getMessage());
-                                                            }
-                                                        });
-                                            }
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+                                                            listener.onLoginFailed(databaseError.getMessage());
+                                                        }
+                                                    });
                                         }
+                                    }
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-                                            listener.onLoginFailed(databaseError.getMessage());
-                                        }
-                                    });
-                        } else {
-                            listener.onLoginFailed(task.getException().getMessage());
-                        }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        listener.onLoginFailed(databaseError.getMessage());
+                                    }
+                                });
+                    } else {
+                        listener.onLoginFailed(task.getException().getMessage());
                     }
                 });
     }
 
     @Override
-    public void getCurrentLoginUser(final CurrentLoginUserListener listener) {
+    public void getCurrentLoginUser(final GetUserListener listener) {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         if (userEmail != null) {
@@ -198,7 +199,7 @@ public class UserRepoFirebaseImpl implements UserRepository {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            listener.onCurrentLoginUserLoaded(dataSnapshot.getValue(User.class));
+                            listener.onUserLoaded(dataSnapshot.getValue(User.class));
                         }
 
                         @Override
@@ -207,5 +208,26 @@ public class UserRepoFirebaseImpl implements UserRepository {
                         }
                     });
         }
+    }
+
+    @Override
+    public void getAllUsers(AllUsersListener listener) {
+        List<User> users = new ArrayList<>();
+        mFirebaseDatabaseLocation.getUsersDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    users.add(user);
+                }
+
+                listener.onAllUsersReady(users);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
