@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mateusz.grabarski.myshoppinglist.database.managers.FriendsManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
-import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
@@ -139,16 +138,18 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
         FriendRequest request = friendRequest.getFriendRequest();
         request.setTimestampOfAcceptRequest(System.currentTimeMillis());
 
-        mFriendsManager.requestAccepted(request, new FriendAddedListener() {
-            @Override
-            public void onFriendAdded() {
-
-            }
+        mFriendsManager.requestAccepted(request, () -> {
+            // TODO: 25.05.2018 maybe send push notification about accepted request
         });
     }
 
     @Override
     public void friendRequestRefused(FriendRequestUI friendRequest) {
-        
+        FriendRequest request = friendRequest.getFriendRequest();
+        request.setTimestampOfDenyRequest(System.currentTimeMillis());
+
+        mFriendsManager.requestDenied(request, request1 -> {
+            // TODO: 25.05.2018 maybe send push notification about denied request
+        });
     }
 }

@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto;
 
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendRequestDenied;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
@@ -12,4 +13,6 @@ public interface FriendsRepository {
     void getUserFriendRequests(User user, GetUserFriendRequestsListener listener);
 
     void addNewFriend(FriendRequest request, FriendAddedListener listener);
+
+    void friendRequestDenied(FriendRequest request, FriendRequestDenied listener);
 }

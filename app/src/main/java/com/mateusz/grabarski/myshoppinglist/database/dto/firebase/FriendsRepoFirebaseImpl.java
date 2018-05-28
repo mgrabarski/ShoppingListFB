@@ -1,7 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.firebase;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -12,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.FriendsRepository;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendRequestDenied;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.Friend;
@@ -90,12 +90,8 @@ public class FriendsRepoFirebaseImpl implements FriendsRepository {
 
     @Override
     public void addNewFriend(FriendRequest request, FriendAddedListener listener) {
-        Log.d(TAG, "addNewFriend: " + request);
 
-        String currentLoginUser = FirebaseAuth
-                .getInstance()
-                .getCurrentUser()
-                .getEmail();
+        String currentLoginUser = getCurrentLoginUserEmail();
 
         mFirebaseDatabaseLocation
                 .getFriendRequestDatabaseReference(currentLoginUser)
@@ -106,6 +102,29 @@ public class FriendsRepoFirebaseImpl implements FriendsRepository {
                         createNewFriendRelation(currentLoginUser, request, listener);
                     }
                 });
+    }
+
+    @Override
+    public void friendRequestDenied(FriendRequest request, FriendRequestDenied listener) {
+
+        String currentLoginUser = getCurrentLoginUserEmail();
+
+        mFirebaseDatabaseLocation
+                .getFriendRequestDatabaseReference(currentLoginUser)
+                .child(request.getKey())
+                .setValue(request)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onRequestDenied(request);
+                    }
+                });
+    }
+
+    private String getCurrentLoginUserEmail() {
+        return FirebaseAuth
+                .getInstance()
+                .getCurrentUser()
+                .getEmail();
     }
 
     private void createNewFriendRelation(String currentLoginUser, FriendRequest request, FriendAddedListener listener) {

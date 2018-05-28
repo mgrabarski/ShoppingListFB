@@ -5,6 +5,7 @@ import com.mateusz.grabarski.myshoppinglist.database.dto.FriendsRepository;
 import com.mateusz.grabarski.myshoppinglist.database.dto.firebase.FriendsRepoFirebaseImpl;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendRequestDenied;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFromFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
@@ -56,5 +57,9 @@ public class FriendsManager {
 
     public void requestAccepted(FriendRequest request, FriendAddedListener listener) {
         mFriendsRepository.addNewFriend(request, listener);
+    }
+
+    public void requestDenied(FriendRequest request, FriendRequestDenied listener) {
+        mFriendsRepository.friendRequestDenied(request, listener);
     }
 }
