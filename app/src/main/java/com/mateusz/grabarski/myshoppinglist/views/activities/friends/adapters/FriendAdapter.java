@@ -27,9 +27,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     private List<User> users;
     private FriendListListener mListener;
 
-    public FriendAdapter(List<User> users, FriendListListener mListener) {
+    public FriendAdapter(List<User> users, FriendListListener listener) {
         this.users = users;
-        this.mListener = mListener;
+        this.mListener = listener;
     }
 
     @Override

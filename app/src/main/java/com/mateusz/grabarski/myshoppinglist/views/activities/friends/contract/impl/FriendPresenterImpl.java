@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FriendContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.models.FriendRequestUI;
 
@@ -36,5 +37,10 @@ public class FriendPresenterImpl implements FriendContract.Presenter {
     @Override
     public void refusedRequest(FriendRequestUI friendRequest) {
         mModel.friendRequestRefused(friendRequest);
+    }
+
+    @Override
+    public void readyUserFriends(List<User> friends) {
+        mView.loadUserFriends(friends);
     }
 }

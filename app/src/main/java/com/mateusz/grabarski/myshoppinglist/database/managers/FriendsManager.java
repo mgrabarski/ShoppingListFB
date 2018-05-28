@@ -7,6 +7,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserL
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendRequestDenied;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendsListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFromFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
@@ -61,5 +62,9 @@ public class FriendsManager {
 
     public void requestDenied(FriendRequest request, FriendRequestDenied listener) {
         mFriendsRepository.friendRequestDenied(request, listener);
+    }
+
+    public void getAllUserFriends(User user, GetUserFriendsListener listener) {
+        mFriendsRepository.getUserFriends(user, listener);
     }
 }

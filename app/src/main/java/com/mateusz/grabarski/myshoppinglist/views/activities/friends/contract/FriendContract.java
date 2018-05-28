@@ -1,5 +1,6 @@
 package com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract;
 
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.models.FriendRequestUI;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface FriendContract {
     interface View {
 
         void displayFriendRequests(List<FriendRequestUI> friendRequests);
+
+        void loadUserFriends(List<User> friends);
     }
 
     interface Presenter {
@@ -32,5 +35,7 @@ public interface FriendContract {
         void acceptedRequest(FriendRequestUI friendRequest);
 
         void refusedRequest(FriendRequestUI friendRequest);
+
+        void readyUserFriends(List<User> friends);
     }
 }

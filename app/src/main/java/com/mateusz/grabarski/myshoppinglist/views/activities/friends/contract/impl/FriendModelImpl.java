@@ -5,6 +5,7 @@ import com.mateusz.grabarski.myshoppinglist.database.managers.FriendsManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.UserManager;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendsListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
 import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FriendContract;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by Mateusz Grabarski on 22.05.2018.
  */
-public class FriendModelImpl implements FriendContract.Model, GetUserFriendRequestsListener {
+public class FriendModelImpl implements FriendContract.Model, GetUserFriendRequestsListener, GetUserFriendsListener {
 
     private static final String TAG = "FriendModelImpl";
 
@@ -25,6 +26,7 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
     private UserManager mUserManager;
     private List<FriendRequest> mFriendRequests;
     private List<FriendRequestUI> mFriendRequestUI;
+    private List<User> mFriends;
 
     private boolean startLoadingUserFriendRequests;
 
@@ -34,6 +36,7 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
         this.mUserManager = new UserManager();
         this.mFriendRequests = new ArrayList<>();
         this.mFriendRequestUI = new ArrayList<>();
+        this.mFriends = new ArrayList<>();
         this.startLoadingUserFriendRequests = false;
 
         mUserManager.getUserByEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
@@ -41,6 +44,7 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
                     @Override
                     public void onUserLoaded(User currentLoginUser) {
                         mFriendsManager.getAllUserFriendRequests(currentLoginUser, FriendModelImpl.this);
+                        mFriendsManager.getAllUserFriends(currentLoginUser, FriendModelImpl.this);
                     }
 
                     @Override
@@ -151,5 +155,37 @@ public class FriendModelImpl implements FriendContract.Model, GetUserFriendReque
         mFriendsManager.requestDenied(request, request1 -> {
             // TODO: 25.05.2018 maybe send push notification about denied request
         });
+    }
+
+    @Override
+    public void onNewFriend(User user) {
+        mFriends.add(user);
+        mPresenter.readyUserFriends(mFriends);
+    }
+
+    @Override
+    public void onFriendUpdate(User user) {
+
+        for (int i = 0; i < mFriends.size(); i++) {
+            if (user.getEmail().equals(mFriends.get(i).getEmail())) {
+                mFriends.set(i, user);
+                break;
+            }
+        }
+
+        mPresenter.readyUserFriends(mFriends);
+    }
+
+    @Override
+    public void onFriendDeleted(User user) {
+
+        for (int i = 0; i < mFriends.size(); i++) {
+            if (user.getEmail().equals(mFriends.get(i).getEmail())) {
+                mFriends.remove(i);
+                break;
+            }
+        }
+
+        mPresenter.readyUserFriends(mFriends);
     }
 }

@@ -1,6 +1,7 @@
 package com.mateusz.grabarski.myshoppinglist.database.dto.firebase;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -10,9 +11,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mateusz.grabarski.myshoppinglist.database.FirebaseDatabaseLocation;
 import com.mateusz.grabarski.myshoppinglist.database.dto.FriendsRepository;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.GetUserListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendAddedListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.FriendRequestDenied;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendRequestsListener;
+import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.GetUserFriendsListener;
 import com.mateusz.grabarski.myshoppinglist.database.managers.listeners.friends.SendFriendRequestListener;
 import com.mateusz.grabarski.myshoppinglist.database.models.Friend;
 import com.mateusz.grabarski.myshoppinglist.database.models.FriendRequest;
@@ -23,9 +26,11 @@ public class FriendsRepoFirebaseImpl implements FriendsRepository {
     private static final String TAG = "FriendsRepoFirebaseImpl";
 
     private FirebaseDatabaseLocation mFirebaseDatabaseLocation;
+    private UserRepoFirebaseImpl mUserRepository;
 
     public FriendsRepoFirebaseImpl() {
         mFirebaseDatabaseLocation = new FirebaseDatabaseLocation();
+        mUserRepository = new UserRepoFirebaseImpl();
     }
 
     @Override
@@ -116,6 +121,48 @@ public class FriendsRepoFirebaseImpl implements FriendsRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         listener.onRequestDenied(request);
+                    }
+                });
+    }
+
+    @Override
+    public void getUserFriends(User user, GetUserFriendsListener listener) {
+        mFirebaseDatabaseLocation.getFriendsDatabaseReference(user.getEmail())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Friend friend = dataSnapshot.getValue(Friend.class);
+                        mUserRepository.getUserByEmail(friend.getEmail(), new GetUserListener() {
+                            @Override
+                            public void onUserLoaded(User user) {
+                                listener.onNewFriend(user);
+                            }
+
+                            @Override
+                            public void onErrorReceived(String message) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Log.d(TAG, "onChildChanged: " + dataSnapshot.toString());
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onChildRemoved: " + dataSnapshot.toString());
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
     }

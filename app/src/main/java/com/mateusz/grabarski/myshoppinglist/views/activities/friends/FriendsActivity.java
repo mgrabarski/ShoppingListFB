@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mateusz.grabarski.myshoppinglist.R;
+import com.mateusz.grabarski.myshoppinglist.database.models.User;
 import com.mateusz.grabarski.myshoppinglist.views.activities.dashboard.adapters.FriendsViewPagerAdapter;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.FriendContract;
 import com.mateusz.grabarski.myshoppinglist.views.activities.friends.contract.impl.FriendPresenterImpl;
@@ -24,7 +25,8 @@ import butterknife.ButterKnife;
 
 public class FriendsActivity extends AppCompatActivity implements
         FriendContract.View,
-        RequestFriendListFragment.RequestFriendListFragmentInterface {
+        RequestFriendListFragment.RequestFriendListFragmentInterface,
+        FriendsListFragment.FriendsListFragmentInterface {
 
     private static final String TAG = "FriendsActivity";
 
@@ -97,12 +99,23 @@ public class FriendsActivity extends AppCompatActivity implements
 
     @Override
     public void displayFriendRequests(List<FriendRequestUI> friendRequests) {
+        runOnUiThread(() -> ((RequestFriendListFragment) mViewPagerAdapter.getFragment(RequestFriendListFragment.class))
+                .updateFriendRequests(friendRequests));
+    }
+
+    @Override
+    public void loadUserFriends(List<User> friends) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((RequestFriendListFragment) mViewPagerAdapter.getFragment(RequestFriendListFragment.class))
-                        .updateFriendRequests(friendRequests);
+                ((FriendsListFragment) mViewPagerAdapter.getFragment(FriendsListFragment.class))
+                        .updateFriendList(friends);
             }
         });
+    }
+
+    @Override
+    public void onUserSelected(User user) {
+        // TODO: 28.05.2018 maybe start chat
     }
 }
